@@ -2,15 +2,21 @@ package com.project.propensib8.model;
 
 import java.io.Serializable;
 import java.sql.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "pasien")
@@ -25,7 +31,7 @@ public class PasienModel implements Serializable{
 	private String idMedrec;
 	
 	@NotNull
-	@Size(max = 16)
+	@Size(max = 20)
 	@Column(name = "nik", nullable = false)
 	private String nik;
 	
@@ -48,8 +54,13 @@ public class PasienModel implements Serializable{
 	private String tempatLahir;
 	
 	@NotNull
+	@Size(max = 1)
     @Column(name = "jenis_kelamin", nullable = false)
-    private int jenisKelamin;
+    private String jenisKelamin;
+	
+	@OneToMany(mappedBy = "pasien", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JsonIgnore
+	private List<SurveiModel> listSurvei;
 
 	public long getId() {
 		return id;
@@ -107,11 +118,21 @@ public class PasienModel implements Serializable{
 		this.tempatLahir = tempatLahir;
 	}
 
-	public int getJenisKelamin() {
+	public String getJenisKelamin() {
 		return jenisKelamin;
 	}
 
-	public void setJenisKelamin(int jenisKelamin) {
+	public void setJenisKelamin(String jenisKelamin) {
 		this.jenisKelamin = jenisKelamin;
 	}
+
+	public List<SurveiModel> getListSurvei() {
+		return listSurvei;
+	}
+
+	public void setListSurvei(List<SurveiModel> listSurvei) {
+		this.listSurvei = listSurvei;
+	}
+	
+	
 }

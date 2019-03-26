@@ -14,6 +14,10 @@ import com.project.propensib8.repository.PasienDB;
 public class PasienServiceImpl implements PasienService{
 	@Autowired
 	PasienDB pasienDb;
+
+	@Override
+	public PasienModel getPasienByIdMedrec(String idMedrec) {
+		return pasienDb.findByIdMedrec(idMedrec);
+	}
 	
-	//your code goes here ...
 }

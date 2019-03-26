@@ -9,5 +9,5 @@ import com.project.propensib8.model.PasienModel;
 
 @Repository
 public interface PasienDB extends JpaRepository<PasienModel, Long>{
-	
+	PasienModel findByIdMedrec(String idMedrec);
 }
