@@ -16,12 +16,12 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
 @Table(name = "survei")
@@ -29,6 +29,9 @@ public class SurveiModel implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
+	
+	@Column(name = "tanggal", nullable = false)
+	private Date tanggal;
 	
 	@NotNull
 	@Column(name = "jenis_survei", nullable = false)
@@ -83,9 +86,18 @@ public class SurveiModel implements Serializable{
 	public PasienModel getPasien() {
 		return pasien;
 	}
-
+	
+	@JsonProperty("pasien")
 	public void setPasien(PasienModel pasien) {
 		this.pasien = pasien;
+	}
+
+	public Date getTanggal() {
+		return tanggal;
+	}
+
+	public void setTanggal(Date tanggal) {
+		this.tanggal = tanggal;
 	}
 	
 	
