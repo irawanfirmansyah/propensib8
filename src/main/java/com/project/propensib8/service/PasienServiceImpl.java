@@ -12,6 +12,7 @@ import com.project.propensib8.repository.PasienDB;
 @Service
 @Transactional
 public class PasienServiceImpl implements PasienService{
+
 	@Autowired
 	PasienDB pasienDb;
 
