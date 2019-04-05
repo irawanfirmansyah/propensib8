@@ -20,5 +20,6 @@ public class PasienServiceImpl implements PasienService{
 	public PasienModel getPasienByIdMedrec(String idMedrec) {
 		return pasienDb.findByIdMedrec(idMedrec);
 	}
+
 	
 }

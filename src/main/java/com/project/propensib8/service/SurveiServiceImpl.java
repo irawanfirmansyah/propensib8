@@ -12,12 +12,8 @@ import com.project.propensib8.repository.SurveiDB;
 @Service
 @Transactional
 public class SurveiServiceImpl implements SurveiService{
-
 	@Autowired
 	SurveiDB surveiDb;
 
-	@Override
-	public SurveiModel getSurveiById(long id) {
-		return surveiDb.findById(id);
-	}
+	//your code goes here ...
 }
