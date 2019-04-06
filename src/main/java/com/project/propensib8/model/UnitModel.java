@@ -21,6 +21,7 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
 @Table(name = "unit")
@@ -46,7 +47,7 @@ public class UnitModel implements Serializable{
 	
 	@OneToMany(mappedBy = "unit", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JsonIgnore
-	private List<FeedbackModel> listFeedback;
+	private List<KomplainModel> listKomplain;
 
 	public long getId() {
 		return id;
@@ -68,6 +69,7 @@ public class UnitModel implements Serializable{
 		return survei;
 	}
 
+	@JsonProperty("survei")
 	public void setSurvei(SurveiModel survei) {
 		this.survei = survei;
 	}
@@ -80,12 +82,13 @@ public class UnitModel implements Serializable{
 		this.listParameter = listParameter;
 	}
 
-	public List<FeedbackModel> getListFeedback() {
-		return listFeedback;
+	public List<KomplainModel> getListKomplain() {
+		return listKomplain;
 	}
 
-	public void setListFeedback(List<FeedbackModel> listFeedback) {
-		this.listFeedback = listFeedback;
+	public void setListKomplain(List<KomplainModel> listKomplain) {
+		this.listKomplain = listKomplain;
 	}
+	
 }
 

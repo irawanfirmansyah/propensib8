@@ -16,6 +16,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -40,6 +41,10 @@ public class SurveiModel implements Serializable{
 	@NotNull
     @Column(name = "rating", nullable = false)
     private int rating;
+	
+	@Size(max = 255)
+	@Column(name = "feedback")
+	private String feedback;
 	
 	@OneToMany(mappedBy = "survei", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JsonIgnore
