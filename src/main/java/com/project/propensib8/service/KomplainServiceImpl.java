@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 @Transactional
@@ -17,7 +18,7 @@ public class KomplainServiceImpl implements KomplainService{
 	KomplainDB komplainDb;
 
 	@Override
-	public KomplainModel getSurveiById(long id) {
+	public KomplainModel getKomplainById(long id) {
 		return komplainDb.findById(id);
 	}
 
@@ -25,4 +26,9 @@ public class KomplainServiceImpl implements KomplainService{
 	public List<KomplainModel> findAll() {
 		return komplainDb.findAll();
 	}
+
+	public KomplainModel createKomplain(KomplainModel komplainModel) {
+		return komplainDb.save(komplainModel);
+	}
+
 }

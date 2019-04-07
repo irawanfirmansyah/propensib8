@@ -7,6 +7,6 @@ import java.util.List;
 
 public interface KomplainService {
 	
-    KomplainModel getSurveiById(long id);
+    KomplainModel getKomplainById(long id);
     List<KomplainModel> findAll();
 }
