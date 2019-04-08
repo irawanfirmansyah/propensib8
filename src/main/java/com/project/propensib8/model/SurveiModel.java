@@ -22,10 +22,12 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
 @Table(name = "survei")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class SurveiModel implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,9 +36,10 @@ public class SurveiModel implements Serializable{
 	@Column(name = "tanggal", nullable = false)
 	private Date tanggal;
 	
+	@Size(max = 20)
 	@NotNull
 	@Column(name = "jenis_survei", nullable = false)
-	private int jenisSurvei;
+	private String jenisSurvei;
 	
 	@NotNull
     @Column(name = "rating", nullable = false)
@@ -80,11 +83,11 @@ public class SurveiModel implements Serializable{
 		this.listUnit = listUnit;
 	}
 
-	public int getJenisSurvei() {
+	public String getJenisSurvei() {
 		return jenisSurvei;
 	}
 
-	public void setJenisSurvei(int jenisSurvei) {
+	public void setJenisSurvei(String jenisSurvei) {
 		this.jenisSurvei = jenisSurvei;
 	}
 
@@ -92,7 +95,6 @@ public class SurveiModel implements Serializable{
 		return pasien;
 	}
 	
-	@JsonProperty("pasien")
 	public void setPasien(PasienModel pasien) {
 		this.pasien = pasien;
 	}
@@ -104,6 +106,12 @@ public class SurveiModel implements Serializable{
 	public void setTanggal(Date tanggal) {
 		this.tanggal = tanggal;
 	}
-	
-	
+
+	public String getFeedback() {
+		return feedback;
+	}
+
+	public void setFeedback(String feedback) {
+		this.feedback = feedback;
+	}
 }

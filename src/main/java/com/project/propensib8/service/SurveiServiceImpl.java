@@ -1,5 +1,6 @@
 package com.project.propensib8.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,20 @@ import com.project.propensib8.repository.SurveiDB;
 public class SurveiServiceImpl implements SurveiService{
 	@Autowired
 	SurveiDB surveiDb;
+
+	@Override
+	public List<SurveiModel> getAllKomplain() {
+		List<SurveiModel> res = new ArrayList<>();
+		List<SurveiModel> listSurvei = surveiDb.findAll();
+		
+		for(SurveiModel s : listSurvei){
+			if(s.getRating() <= 3){
+				res.add(s);
+			}
+		}
+
+		return res;
+	}
 	
 	//your code goes here ...
 }
