@@ -51,7 +51,7 @@ public class SurveiModel implements Serializable{
 	
 	@OneToMany(mappedBy = "survei", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JsonIgnore
-	private List<UnitModel> listUnit;
+	private List<KomplainModel> listKomplain;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "id_pasien", referencedColumnName = "id", nullable = false)
@@ -75,12 +75,12 @@ public class SurveiModel implements Serializable{
 		this.rating = rating;
 	}
 
-	public List<UnitModel> getListUnit() {
-		return listUnit;
+	public List<KomplainModel> getListKomplain() {
+		return listKomplain;
 	}
 
-	public void setListUnit(List<UnitModel> listUnit) {
-		this.listUnit = listUnit;
+	public void setListKomplain(List<KomplainModel> listKomplain) {
+		this.listKomplain = listKomplain;
 	}
 
 	public String getJenisSurvei() {

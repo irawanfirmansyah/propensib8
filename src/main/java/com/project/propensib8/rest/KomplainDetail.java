@@ -1,7 +1,7 @@
 package com.project.propensib8.rest;
 
 public class KomplainDetail {
-    String idPasien;
+    String idKomplain;
     String namaPasien;
     String tanggalPengisian;
     int rating;
@@ -23,11 +23,11 @@ public class KomplainDetail {
     }
 
     public String getId() {
-        return idPasien;
+        return idKomplain;
     }
 
     public void setId(String id) {
-        this.idPasien = id;
+        this.idKomplain = id;
     }
 
     public String getNamaPasien() {

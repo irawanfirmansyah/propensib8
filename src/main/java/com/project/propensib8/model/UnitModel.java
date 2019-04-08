@@ -35,12 +35,6 @@ public class UnitModel implements Serializable{
 	@Column(name = "nama", nullable = false)
 	private String nama;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "id_survei", referencedColumnName = "id", nullable = false)
-	@OnDelete(action = OnDeleteAction.CASCADE)
-	@JsonIgnore
-	private SurveiModel survei;
-	
 	@OneToMany(mappedBy = "unit", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JsonIgnore
 	private List<ParameterModel> listParameter;
@@ -48,7 +42,7 @@ public class UnitModel implements Serializable{
 	@OneToMany(mappedBy = "unit", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JsonIgnore
 	private List<KomplainModel> listKomplain;
-
+	
 	public long getId() {
 		return id;
 	}
@@ -63,15 +57,6 @@ public class UnitModel implements Serializable{
 
 	public void setNama(String nama) {
 		this.nama = nama;
-	}
-
-	public SurveiModel getSurvei() {
-		return survei;
-	}
-
-	@JsonProperty("survei")
-	public void setSurvei(SurveiModel survei) {
-		this.survei = survei;
 	}
 
 	public List<ParameterModel> getListParameter() {

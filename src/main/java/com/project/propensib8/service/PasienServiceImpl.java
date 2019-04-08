@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.project.propensib8.model.KomplainModel;
 import com.project.propensib8.model.PasienModel;
 import com.project.propensib8.model.SurveiModel;
+import com.project.propensib8.repository.KomplainDB;
 import com.project.propensib8.repository.PasienDB;
 
 @Service
@@ -20,6 +21,9 @@ public class PasienServiceImpl implements PasienService{
 
 	@Autowired
 	SurveiService surveiService;
+	
+	@Autowired
+	KomplainDB komplainDb;
 
 	@Override
 	public PasienModel getPasienByIdMedrec(String idMedrec) {
@@ -36,4 +40,11 @@ public class PasienServiceImpl implements PasienService{
 	public List<PasienModel> getAllPasien(){
 		return pasienDb.findAll();
 	}
+
+	@Override
+	public KomplainModel getKomplainById(long id) {
+		return null;
+	}
+	
+	
 }

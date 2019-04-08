@@ -23,10 +23,12 @@ import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.annotations.Type;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
 @Table(name = "komplain")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class KomplainModel implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -40,6 +42,12 @@ public class KomplainModel implements Serializable {
 	@Size(max = 255)
 	@Column(name = "result", nullable = false)
 	private String result;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "id_survei", referencedColumnName = "id", nullable = false)
+	@OnDelete(action = OnDeleteAction.CASCADE)
+	@JsonIgnore
+	private SurveiModel survei;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "id_unit", referencedColumnName = "id", nullable = false)
@@ -79,7 +87,6 @@ public class KomplainModel implements Serializable {
 		return unit;
 	}
 	
-	@JsonProperty("unit")
 	public void setUnit(UnitModel unit) {
 		this.unit = unit;
 	}
@@ -91,6 +98,12 @@ public class KomplainModel implements Serializable {
 	public void setSolved(boolean isSolved) {
 		this.isSolved = isSolved;
 	}
-	
-	
+
+	public SurveiModel getSurvei() {
+		return survei;
+	}
+
+	public void setSurvei(SurveiModel survei) {
+		this.survei = survei;
+	}
 }
