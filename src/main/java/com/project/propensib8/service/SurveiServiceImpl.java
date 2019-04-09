@@ -16,6 +16,7 @@ public class SurveiServiceImpl implements SurveiService{
 	@Autowired
 	SurveiDB surveiDb;
 
+<<<<<<< HEAD
 	@Override
 	public List<SurveiModel> getAllKomplain() {
 		List<SurveiModel> res = new ArrayList<>();
@@ -30,5 +31,7 @@ public class SurveiServiceImpl implements SurveiService{
 		return res;
 	}
 	
+=======
+>>>>>>> aca69f684d7b8cc926d9d505a70fd0b96369208a
 	//your code goes here ...
 }

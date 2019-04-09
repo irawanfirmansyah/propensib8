@@ -58,7 +58,7 @@ public class KomplainModel implements Serializable {
 	@Column(name = "is_solved", nullable = false)
 	@Type(type = "org.hibernate.type.NumericBooleanType")
 	private boolean isSolved;
-
+	
 	public long getId() {
 		return id;
 	}

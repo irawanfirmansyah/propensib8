@@ -16,6 +16,7 @@ import com.project.propensib8.repository.PasienDB;
 @Service
 @Transactional
 public class PasienServiceImpl implements PasienService{
+
 	@Autowired
 	PasienDB pasienDb;
 
@@ -30,6 +31,7 @@ public class PasienServiceImpl implements PasienService{
 		return pasienDb.findByIdMedrec(idMedrec);
 	}
 
+<<<<<<< HEAD
 	@Override
 	public PasienModel getPasienById(String id) {
 		PasienModel res = pasienDb.getOne(Long.parseLong(id));
@@ -46,5 +48,7 @@ public class PasienServiceImpl implements PasienService{
 		return null;
 	}
 	
+=======
+>>>>>>> aca69f684d7b8cc926d9d505a70fd0b96369208a
 	
 }

@@ -57,12 +57,16 @@ public class SurveiModel implements Serializable{
 	@JsonIgnore
 	private List<ReviewModel> listReview;
 	
+	@OneToMany(mappedBy = "survei", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JsonIgnore
+	private List<UnitModel> listUnit;
+	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "id_pasien", referencedColumnName = "id", nullable = false)
 	@OnDelete(action = OnDeleteAction.CASCADE)
 	@JsonIgnore
 	private PasienModel pasien;
-	
+
 	public long getId() {
 		return id;
 	}
@@ -125,5 +129,14 @@ public class SurveiModel implements Serializable{
 
 	public void setListReview(List<ReviewModel> listReview) {
 		this.listReview = listReview;
-	}	
+	}
+
+	public List<UnitModel> getListUnit() {
+		return listUnit;
+	}
+
+	public void setListUnit(List<UnitModel> listUnit) {
+		this.listUnit = listUnit;
+	}
+	
 }
