@@ -111,17 +111,4 @@ public class PasienController {
 
 		return new ResponseEntity(res, HttpStatus.OK);
 	}
-
-	@GetMapping(value = "/komplain/{namaPasien}/{tanggalPengisian}")
-	public ResponseEntity<?> getDetailKomplain(@PathVariable ("namaPasien") String namaPasien, @PathVariable ("tanggalPengisian") String tanggalPengisian){
-		KomplainDetailProfile detail = new KomplainDetailProfile();
-		PasienModel pasien = komplainService.getPasienByNamaTanggal(namaPasien, tanggalPengisian);
-		List<KomplainModel> listOfKomplain = komplainService.getKomplainByNamaTanggal(namaPasien, tanggalPengisian);
-		detail.setAlamat(pasien.getAlamat());
-		detail.setListKomplain(listOfKomplain);
-		detail.setNamaPasien(namaPasien);
-		detail.setTanggalPengisian(tanggalPengisian);
-		return new ResponseEntity(detail, HttpStatus.OK);
-	}
-
 }
