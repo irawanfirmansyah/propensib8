@@ -19,6 +19,7 @@ import com.project.propensib8.model.PasienModel;
 import com.project.propensib8.repository.KomplainDB;
 import com.project.propensib8.repository.PasienDB;
 import com.project.propensib8.rest.KomplainDetail;
+import com.project.propensib8.rest.KomplainDetailProfile;
 import com.project.propensib8.rest.KomplainPasienDetail;
 import com.project.propensib8.service.KomplainService;
 import com.project.propensib8.service.PasienService;
@@ -85,10 +86,12 @@ public class PasienController {
 		List<KomplainPasienDetail> res = new ArrayList<>();
 
 		for(KomplainModel k : allKomplain) {
-			System.out.println("komplain");
 			KomplainPasienDetail details = new KomplainPasienDetail();
 			String lastPasien = "";
+			String lastTanggal = "";
+			String tanggalNow = "";
 
+			//Kalau list yang ingin di return msh kosong, langsung buaat object
 			if(res.size() == 0) {
 				details.setNamaPasien(k.getSurvei().getPasien().getNama());
 
@@ -105,19 +108,29 @@ public class PasienController {
 				res.add(details);
 			}
 
+			//Kalau sudah terisi, check
 			else {
 				lastPasien = res.get(res.size()-1).getNamaPasien();
-				if(lastPasien.equalsIgnoreCase(k.getSurvei().getPasien().getNama())) {
+
+				java.sql.Date tanggalPresent = k.getSurvei().getTanggal();
+				java.sql.Date tanggalKemarin = res.get(res.size()-1).getListKomplain().get(0).getSurvei().getTanggal();
+				SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+				tanggalNow = formatter.format(tanggalPresent);
+				lastTanggal = formatter.format(tanggalKemarin);
+				
+
+				lastTanggal = res.get(res.size()-1).getTanggalKomplain();
+				if(lastPasien.equalsIgnoreCase(k.getSurvei().getPasien().getNama()) && lastTanggal.equalsIgnoreCase(tanggalNow)){
 					//masukkan objek komplain miliki pasien ke KomplainPasienDetail yang sudah ada di array list
 					res.get(res.size()-1).getListKomplain().add(k);
 				}
+
 				else {
 					details.setNamaPasien(k.getSurvei().getPasien().getNama());
 
 					details.setRating(k.getSurvei().getRating());
 
 					java.sql.Date sqlDate = k.getSurvei().getTanggal();
-					SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 					String resDate = formatter.format(sqlDate);
 
 					details.setTanggalKomplain(resDate);
@@ -132,10 +145,12 @@ public class PasienController {
 		return new ResponseEntity(res, HttpStatus.OK);
 	}
 
-	@GetMapping(value = "/komplain/{namaPasien}/{tanggalPengisian}")
-	public ResponseEntity<?> getDetailKomplain(@PathVariable ("namaPasien") String namaPasien, @PathVariable ("tanggalPengisian") String tanggalPengisian){
-		PasienModel pasien = komplainService.getPasienByNamaTanggal(namaPasien, tanggalPengisian);
-		
-	}
+	// @GetMapping(value = "/komplain/{namaPasien}/{tanggalPengisian}")
+	// public ResponseEntity<?> getDetailKomplain(@PathVariable ("namaPasien") String namaPasien, @PathVariable ("tanggalPengisian") String tanggalPengisian){
+	// 	KomplainDetailProfile detail = new KomplainDetailProfile();
+	// 	PasienModel pasien = komplainService.getPasienByNamaTanggal(namaPasien, tanggalPengisian);
+	// 	detail.setAlamat(pasien.getAlamat());
+	// 	detail.setListKomplain(listKomplain);
+	// }
 
 }

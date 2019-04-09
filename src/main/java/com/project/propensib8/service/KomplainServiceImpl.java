@@ -24,10 +24,11 @@ public class KomplainServiceImpl implements KomplainService{
 
 	@Override
 	public PasienModel getPasienByNamaTanggal(String namaPasien, String tanggalPengisian) {
-        PasienModel picked;
+        PasienModel picked = new PasienModel();
+
         for (KomplainModel komplain: komplainDb.findAll()){
-            if(komplain.getSurvei().getPasien().getNama().equals(namaPasien){
-                if(komplain.getSurvei().getTanggal().equals(tanggalPengisian){
+            if(komplain.getSurvei().getPasien().getNama().equals(namaPasien)){
+                if(komplain.getSurvei().getTanggal().equals(tanggalPengisian)){
                     picked = komplain.getSurvei().getPasien();
                 }
             }

@@ -47,6 +47,9 @@ public class SurveiModel implements Serializable{
 	@OnDelete(action = OnDeleteAction.CASCADE)
 	@JsonIgnore
 	private PasienModel pasien;
+
+	@Column(name = "tanggal", nullable = false)
+	private Date tanggal;
 	
 	public long getId() {
 		return id;
@@ -88,5 +91,13 @@ public class SurveiModel implements Serializable{
 		this.pasien = pasien;
 	}
 	
+	public Date getTanggal() {
+		return tanggal;
+	}
+
+	public void setTanggal(Date tanggal) {
+		this.tanggal = tanggal;
+	}
+
 	
 }
