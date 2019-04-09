@@ -52,7 +52,11 @@ public class SurveiModel implements Serializable{
 	@OneToMany(mappedBy = "survei", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JsonIgnore
 	private List<KomplainModel> listKomplain;
-
+	
+	@OneToMany(mappedBy = "survei", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JsonIgnore
+	private List<ReviewModel> listReview;
+	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "id_pasien", referencedColumnName = "id", nullable = false)
 	@OnDelete(action = OnDeleteAction.CASCADE)
@@ -114,4 +118,14 @@ public class SurveiModel implements Serializable{
 	public void setFeedback(String feedback) {
 		this.feedback = feedback;
 	}
+
+	public List<ReviewModel> getListReview() {
+		return listReview;
+	}
+
+	public void setListReview(List<ReviewModel> listReview) {
+		this.listReview = listReview;
+	}
+	
+	
 }

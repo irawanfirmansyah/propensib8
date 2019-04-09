@@ -42,6 +42,10 @@ public class UnitModel implements Serializable{
 	
 	@OneToMany(mappedBy = "unit", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JsonIgnore
+	private List<ReviewModel> listReview;
+	
+	@OneToMany(mappedBy = "unit", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JsonIgnore
 	private List<UnitParameterModel> listUnitParameter;
 	
 	public long getId() {
@@ -76,6 +80,13 @@ public class UnitModel implements Serializable{
 	public void setListUnitParameter(List<UnitParameterModel> listUnitParameter) {
 		this.listUnitParameter = listUnitParameter;
 	}
-	
+
+	public List<ReviewModel> getListReview() {
+		return listReview;
+	}
+
+	public void setListReview(List<ReviewModel> listReview) {
+		this.listReview = listReview;
+	}
 }
 

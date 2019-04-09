@@ -60,6 +60,16 @@ public class PasienModel implements Serializable{
     @Column(name = "jenis_kelamin", nullable = false)
     private String jenisKelamin;
 	
+	@NotNull
+	@Size(max = 20)
+	@Column(name = "nomor_hp", nullable = false)
+	private String nomorHp;
+	
+	@NotNull
+	@Size(max = 20)
+	@Column(name = "nomor_telepon", nullable = false)
+	private String nomorTelepon;
+	
 	@OneToMany(mappedBy = "pasien", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JsonIgnore
 	private List<SurveiModel> listSurvei;
@@ -135,6 +145,21 @@ public class PasienModel implements Serializable{
 	public void setListSurvei(List<SurveiModel> listSurvei) {
 		this.listSurvei = listSurvei;
 	}
-	
+
+	public String getNomorHp() {
+		return nomorHp;
+	}
+
+	public void setNomorHp(String nomorHp) {
+		this.nomorHp = nomorHp;
+	}
+
+	public String getNomorTelepon() {
+		return nomorTelepon;
+	}
+
+	public void setNomorTelepon(String nomorTelepon) {
+		this.nomorTelepon = nomorTelepon;
+	}
 	
 }
