@@ -36,14 +36,4 @@ public class KomplainController {
 		return new ResponseEntity(listKomplain,HttpStatus.OK);
 	}
 	
-    // @GetMapping
-    // public ResponseEntity<Object> getAllKomplain(){
-    //     List<JSONObject> entities = new ArrayList<>();
-    // }
-//	@PostMapping(value="/add")
-//	public ResponseEntity<?> addUnit(@Valid @RequestBody Map<String,String> result) throws URISyntaxException{
-//		String idSurvei = result.get(arg0)
-//		UnitModel result = unitDb.save(unit);
-//		return ResponseEntity.created(new URI("/survei/add/" + result.getId())).body(result);
-//	}
 }

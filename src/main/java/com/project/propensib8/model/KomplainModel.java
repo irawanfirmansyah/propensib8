@@ -40,7 +40,7 @@ public class KomplainModel implements Serializable {
 	private String deskripsi;
 	
 	@Size(max = 255)
-	@Column(name = "result", nullable = false)
+	@Column(name = "result", nullable = true)
 	private String result;
 	
 	@ManyToOne(fetch = FetchType.LAZY)

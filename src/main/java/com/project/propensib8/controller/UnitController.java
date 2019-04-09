@@ -29,10 +29,4 @@ public class UnitController {
 	@Autowired
 	private UnitDB unitDb;
 	
-//	@PostMapping(value="/add")
-//	public ResponseEntity<?> addUnit(@Valid @RequestBody Map<String,String> result) throws URISyntaxException{
-//		String idSurvei = result.get(arg0)
-//		UnitModel result = unitDb.save(unit);
-//		return ResponseEntity.created(new URI("/survei/add/" + result.getId())).body(result);
-//	}
 }
