@@ -32,33 +32,33 @@ public class SurveiModel implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
-	
+
 	@Column(name = "tanggal", nullable = false)
 	private Date tanggal;
-	
+
 	@Size(max = 20)
 	@NotNull
 	@Column(name = "jenis_survei", nullable = false)
 	private String jenisSurvei;
-	
+
 	@NotNull
-    @Column(name = "rating", nullable = false)
-    private int rating;
-	
+	@Column(name = "rating", nullable = false)
+	private int rating;
+
 	@Size(max = 255)
 	@Column(name = "feedback")
 	private String feedback;
-	
+
 	@OneToMany(mappedBy = "survei", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JsonIgnore
 	private List<KomplainModel> listKomplain;
-	
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "id_pasien", referencedColumnName = "id", nullable = false)
 	@OnDelete(action = OnDeleteAction.CASCADE)
 	@JsonIgnore
 	private PasienModel pasien;
-	
+
 	public long getId() {
 		return id;
 	}
@@ -94,7 +94,7 @@ public class SurveiModel implements Serializable{
 	public PasienModel getPasien() {
 		return pasien;
 	}
-	
+
 	public void setPasien(PasienModel pasien) {
 		this.pasien = pasien;
 	}

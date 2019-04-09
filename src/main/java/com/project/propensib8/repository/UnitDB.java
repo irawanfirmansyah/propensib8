@@ -9,5 +9,5 @@ import com.project.propensib8.model.UnitModel;
 
 @Repository
 public interface UnitDB extends JpaRepository<UnitModel, Long>{
-	
+	UnitModel findByNama(String nama);
 }

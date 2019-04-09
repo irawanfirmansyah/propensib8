@@ -55,7 +55,8 @@ public class SurveiController {
 		result.setFeedback(res.get("feedback"));
 		
 		result = surveiDb.save(result);
-		return ResponseEntity.created(new URI("/survei/add/" + result.getId())).body(result);
+//		return ResponseEntity.created(new URI("/survei/add/" + result.getId())).body(result);
+		return ResponseEntity.created(new URI("/survei")).body(result);
 	}
 	//CRUD controller goes here
 }

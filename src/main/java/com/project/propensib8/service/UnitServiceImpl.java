@@ -14,6 +14,11 @@ import com.project.propensib8.repository.UnitDB;
 public class UnitServiceImpl implements UnitService{
 	@Autowired
 	UnitDB unitDb;
+
+	@Override
+	public UnitModel getUnitByName(String namaUnit) {
+		return unitDb.findByNama(namaUnit);
+	}
 	
 	//your code goes here...
 }
