@@ -11,12 +11,14 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.project.propensib8.model.KomplainModel;
 import com.project.propensib8.model.PasienModel;
 import com.project.propensib8.repository.KomplainDB;
 import com.project.propensib8.repository.PasienDB;
+import com.project.propensib8.rest.KomplainDetail;
 import com.project.propensib8.rest.KomplainDetailProfile;
 import com.project.propensib8.rest.KomplainPasienDetail;
 import com.project.propensib8.service.KomplainService;
@@ -43,6 +45,7 @@ public class PasienController {
 		PasienModel result = pasienService.getPasienByIdMedrec(idMedrec);
 		return new ResponseEntity(result, HttpStatus.OK);
 	}
+	
 	@GetMapping(value = "/komplain")
 	public ResponseEntity<?> getKomplainPasien(){
 		List<KomplainModel> allKomplain = komplainDb.findAll();

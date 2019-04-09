@@ -62,7 +62,7 @@ public class SurveiModel implements Serializable{
 	@OnDelete(action = OnDeleteAction.CASCADE)
 	@JsonIgnore
 	private PasienModel pasien;
-
+	
 	public long getId() {
 		return id;
 	}
@@ -125,7 +125,5 @@ public class SurveiModel implements Serializable{
 
 	public void setListReview(List<ReviewModel> listReview) {
 		this.listReview = listReview;
-	}
-	
-	
+	}	
 }

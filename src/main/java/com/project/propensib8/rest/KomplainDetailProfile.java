@@ -25,6 +25,7 @@ public class KomplainDetailProfile {
 	public String getAlamat() {
 		return alamat;
 	}
+	
 	public void setAlamat(String alamat) {
 		this.alamat = alamat;
 	}
@@ -34,6 +35,4 @@ public class KomplainDetailProfile {
 	public void setListKomplain(List<KomplainModel> listKomplain) {
 		this.listKomplain = listKomplain;
 	}
-	
-	
 }

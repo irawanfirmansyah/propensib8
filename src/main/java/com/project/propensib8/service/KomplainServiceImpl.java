@@ -58,5 +58,4 @@ public class KomplainServiceImpl implements KomplainService{
         }
         return listOfKomplain;
     }
-    
 }

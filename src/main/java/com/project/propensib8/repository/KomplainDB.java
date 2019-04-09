@@ -9,5 +9,5 @@ import com.project.propensib8.model.KomplainModel;
 
 @Repository
 public interface KomplainDB extends JpaRepository<KomplainModel, Long>{
-	KomplainModel getKomplainById(long id);
+	
 }

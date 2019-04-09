@@ -35,5 +35,4 @@ public class KomplainController {
 		List<KomplainModel> listKomplain = komplainDb.findAll();
 		return new ResponseEntity(listKomplain,HttpStatus.OK);
 	}
-	
 }
