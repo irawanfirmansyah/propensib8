@@ -19,6 +19,7 @@ import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import org.hibernate.annotations.Type;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -37,11 +38,11 @@ public class UnitModel implements Serializable{
 	
 	@OneToMany(mappedBy = "unit", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JsonIgnore
-	private List<ParameterModel> listParameter;
+	private List<KomplainModel> listKomplain;
 	
 	@OneToMany(mappedBy = "unit", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JsonIgnore
-	private List<KomplainModel> listKomplain;
+	private List<UnitParameterModel> listUnitParameter;
 	
 	public long getId() {
 		return id;
@@ -59,20 +60,21 @@ public class UnitModel implements Serializable{
 		this.nama = nama;
 	}
 
-	public List<ParameterModel> getListParameter() {
-		return listParameter;
-	}
-
-	public void setListParameter(List<ParameterModel> listParameter) {
-		this.listParameter = listParameter;
-	}
-
 	public List<KomplainModel> getListKomplain() {
 		return listKomplain;
 	}
 
 	public void setListKomplain(List<KomplainModel> listKomplain) {
 		this.listKomplain = listKomplain;
+	}
+
+
+	public List<UnitParameterModel> getListUnitParameter() {
+		return listUnitParameter;
+	}
+
+	public void setListUnitParameter(List<UnitParameterModel> listUnitParameter) {
+		this.listUnitParameter = listUnitParameter;
 	}
 	
 }

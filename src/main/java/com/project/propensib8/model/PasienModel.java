@@ -17,9 +17,11 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "pasien")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class PasienModel implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
