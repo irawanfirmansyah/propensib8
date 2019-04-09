@@ -12,7 +12,6 @@ import java.text.ParseException;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-<<<<<<< HEAD
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,17 +22,12 @@ import org.springframework.web.bind.annotation.RestController;
 import com.project.propensib8.model.SurveiModel;
 import com.project.propensib8.repository.SurveiDB;
 import com.project.propensib8.service.PasienService;
-=======
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
->>>>>>> aca69f684d7b8cc926d9d505a70fd0b96369208a
 import com.project.propensib8.service.SurveiService;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/survei")
 public class SurveiController {
-<<<<<<< HEAD
 	@Autowired
 	private SurveiService surveiService;
 	
@@ -64,12 +58,4 @@ public class SurveiController {
 //		return ResponseEntity.created(new URI("/survei/add/" + result.getId())).body(result);
 		return ResponseEntity.created(new URI("/survei")).body(result);
 	}
-	//CRUD controller goes here
 }
-=======
-    @Autowired
-    private SurveiService surveiService;
-
-    //CRUD controller goes here
-}
->>>>>>> aca69f684d7b8cc926d9d505a70fd0b96369208a
