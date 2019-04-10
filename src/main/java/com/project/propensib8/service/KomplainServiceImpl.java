@@ -64,7 +64,13 @@ public class KomplainServiceImpl implements KomplainService{
 
 	@Override
 	public List<KomplainModel> findAll() {
-		return komplainDb.findAll();
+		List<KomplainModel> listOfKomplain = new ArrayList<>();
+		for(KomplainModel komplain : komplainDb.findAll()){
+		    if(komplain.getSurvei().getRating() <= 3 && komplain.isSolved() == false){
+		        listOfKomplain.add(komplain);
+            }
+        }
+	    return listOfKomplain;
 	}
 
 	public KomplainModel createKomplain(KomplainModel komplainModel) {

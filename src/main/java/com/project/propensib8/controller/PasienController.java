@@ -48,7 +48,7 @@ public class PasienController {
 	
 	@GetMapping(value = "/komplain")
 	public ResponseEntity<?> getKomplainPasien(){
-		List<KomplainModel> allKomplain = komplainDb.findAll();
+		List<KomplainModel> allKomplain = komplainService.findAll();
 		List<KomplainPasienDetail> res = new ArrayList<>();
 
 		for(KomplainModel k : allKomplain) {
@@ -111,4 +111,6 @@ public class PasienController {
 
 		return new ResponseEntity(res, HttpStatus.OK);
 	}
+	
+
 }
