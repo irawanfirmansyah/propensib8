@@ -45,7 +45,7 @@ public class PasienController {
 		PasienModel result = pasienService.getPasienByIdMedrec(idMedrec);
 		return new ResponseEntity(result, HttpStatus.OK);
 	}
-	
+
 	@GetMapping(value = "/komplain")
 	public ResponseEntity<?> getKomplainPasien(){
 		List<KomplainModel> allKomplain = komplainDb.findAll();
@@ -56,7 +56,7 @@ public class PasienController {
 			String lastPasien = "";
 			String lastTanggal = "";
 			String tanggalNow = "";
-			
+
 
 			//Kalau list yang ingin di return msh kosong, langsung buaat object
 			if(res.size() == 0) {
@@ -84,7 +84,7 @@ public class PasienController {
 				SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 				tanggalNow = formatter.format(tanggalPresent);
 				lastTanggal = formatter.format(tanggalKemarin);
-				
+
 
 				lastTanggal = res.get(res.size()-1).getTanggalKomplain();
 				if(lastPasien.equalsIgnoreCase(k.getSurvei().getPasien().getNama()) && lastTanggal.equalsIgnoreCase(tanggalNow)){
@@ -110,5 +110,17 @@ public class PasienController {
 		}
 
 		return new ResponseEntity(res, HttpStatus.OK);
+	}
+
+	@GetMapping(value = "/komplain/{namaPasien}/{tanggalPengisian}")
+	public ResponseEntity<?> getDetailKomplain(@PathVariable ("namaPasien") String namaPasien, @PathVariable ("tanggalPengisian") String tanggalPengisian){
+		KomplainDetailProfile detail = new KomplainDetailProfile();
+		PasienModel pasien = komplainService.getPasienByNamaTanggal(namaPasien, tanggalPengisian);
+		List<KomplainModel> listOfKomplain = komplainService.getKomplainByNamaTanggal(namaPasien, tanggalPengisian);
+		detail.setAlamat(pasien.getAlamat());
+		detail.setListKomplain(listOfKomplain);
+		detail.setNamaPasien(namaPasien);
+		detail.setTanggalPengisian(tanggalPengisian);
+		return new ResponseEntity(detail, HttpStatus.OK);
 	}
 }

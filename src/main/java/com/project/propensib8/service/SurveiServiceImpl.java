@@ -29,4 +29,9 @@ public class SurveiServiceImpl implements SurveiService{
 		return res;
 	}
 	//your code goes here ...
+
+	@Override
+	public SurveiModel getSurveiById(String id) {
+		return surveiDb.findById(Long.parseLong(id));
+	}
 }

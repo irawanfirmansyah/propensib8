@@ -8,4 +8,6 @@ public interface SurveiService {
 
 	List<SurveiModel> getAllKomplain();
 	//your code goes here ...
+	
+	SurveiModel getSurveiById(String id);
 }
