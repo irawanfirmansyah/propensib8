@@ -6,10 +6,8 @@ import com.project.propensib8.model.KomplainModel;
 
 public class KomplainDetailProfile {
 	String namaPasien;
-    String nomorTelfon;
-    String nomorHp;
-    String alamat;
-    String tanggalPengisian;
+  String alamat;
+  String tanggalPengisian;
 	List<KomplainModel> listKomplain;
 	
 	public String getNamaPasien() {
@@ -17,21 +15,6 @@ public class KomplainDetailProfile {
 	}
 	public void setNamaPasien(String namaPasien) {
 		this.namaPasien = namaPasien;
-	}
-	public String getNomorTelfon() {
-		return nomorTelfon;
-	}
-	public void setNomorTelfon(String nomorTelfon) {
-		this.nomorTelfon = nomorTelfon;
-    }
-    public String getNomorHp() {
-		return nomorHp;
-	}
-	public void setNomorHp(String nomorHp) {
-		this.nomorHp = nomorHp;
-	}
-	public String getAlamat() {
-		return alamat;
 	}
 	public void setAlamat(String alamat) {
 		this.alamat = alamat;
