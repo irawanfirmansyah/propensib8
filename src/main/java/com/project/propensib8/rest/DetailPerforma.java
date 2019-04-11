@@ -1,19 +1,21 @@
 package com.project.propensib8.rest;
 
+import com.project.propensib8.model.KomplainModel;
+import com.project.propensib8.model.ReviewModel;
 import com.project.propensib8.model.UnitParameterModel;
 import java.util.List;
 
 public class DetailPerforma {
-    int rating;
+    int review;
     int komplain;
-    List<UnitParameterModel> listOfUnitParameter;
+    RestKomplainReview res;
 
-    public int getRating() {
-        return rating;
+    public int getReview() {
+        return review;
     }
 
-    public void setRating(int rating) {
-        this.rating = rating;
+    public void setReview(int review) {
+        this.review = review;
     }
 
     public int getKomplain() {
@@ -24,12 +26,12 @@ public class DetailPerforma {
         this.komplain = komplain;
     }
 
-    public List<UnitParameterModel> getListOfUnitParameter() {
-        return listOfUnitParameter;
+    public RestKomplainReview getRes() {
+        return res;
     }
 
-    public void setListOfUnitParameter(List<UnitParameterModel> listOfUnitParameter) {
-        this.listOfUnitParameter = listOfUnitParameter;
+    public void setRes(RestKomplainReview res) {
+        this.res = res;
     }
 
 }

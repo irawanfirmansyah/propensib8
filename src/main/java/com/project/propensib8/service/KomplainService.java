@@ -16,4 +16,7 @@ public interface KomplainService {
     List<KomplainModel> getKomplainByNama(String nama);
     int countKomplainByNama(String nama);
     int countRatingByNama(String nama);
+    List<KomplainModel> getKomplainByNamaUnit(String nama);
+    List<String> getNamaPasienReviewByNama(String nama);
+    List<String> getDeskripsiKomplainByNama(String nama);
 }

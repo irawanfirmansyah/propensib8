@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.project.propensib8.model.KomplainModel;
 import com.project.propensib8.model.PasienModel;
 import com.project.propensib8.repository.KomplainDB;
+import org.springframework.web.bind.annotation.PathVariable;
 
 @Service
 @Transactional
@@ -124,6 +125,57 @@ public class KomplainServiceImpl implements KomplainService{
         }
 	    count /= denominator;
         return count;
+    }
+
+    @Override
+    public List<KomplainModel> getKomplainByNamaUnit(String nama) {
+	    List<KomplainModel> list = new ArrayList<>();
+	    for(KomplainModel komplain : komplainDb.findAll()){
+	        if(komplain.getUnit().getNama().equalsIgnoreCase(nama)){
+	            list.add(komplain);
+            }
+        }
+        return list;
+    }
+
+    @Override
+    public List<String> getNamaPasienReviewByNama(String nama) {
+        List<String> list = new ArrayList<>();
+        List<KomplainModel> listOfReview = komplainDb.findAll();
+        if (komplainDb.findAll().size() <= 3) {
+            for (KomplainModel komplain : komplainDb.findAll()) {
+                if (komplain.getUnit().getNama().equalsIgnoreCase(nama)) {
+                    list.add(komplain.getSurvei().getPasien().getNama());
+                }
+            }
+        } else {
+            for (KomplainModel komplain : komplainDb.findAll()) {
+                if (komplain.getUnit().getNama().equalsIgnoreCase(nama)) {
+                    list.add(komplain.getSurvei().getPasien().getNama());
+                }
+            }
+        }
+        return list;
+    }
+
+    @Override
+    public List<String> getDeskripsiKomplainByNama(String nama) {
+        List<String> list = new ArrayList<>();
+        List<KomplainModel> listOfReview = komplainDb.findAll();
+        if (komplainDb.findAll().size() <= 3) {
+            for (KomplainModel komplain : komplainDb.findAll()) {
+                if (komplain.getUnit().getNama().equalsIgnoreCase(nama)) {
+                    list.add(komplain.getDeskripsi());
+                }
+            }
+        } else {
+            for (KomplainModel komplain : komplainDb.findAll()) {
+                if (komplain.getUnit().getNama().equalsIgnoreCase(nama)) {
+                    list.add(komplain.getDeskripsi());
+                }
+            }
+        }
+        return list;
     }
 
     public KomplainModel createKomplain(KomplainModel komplainModel) {
