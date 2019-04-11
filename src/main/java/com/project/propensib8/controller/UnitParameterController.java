@@ -75,10 +75,10 @@ public class UnitParameterController {
 		PerformaKaryawan performa = new PerformaKaryawan();
 		performa.setNamaUnit(namaUnit);
 		performa.setKomplain(komplainService.countKomplainByNama(namaUnit));
+		performa.setIdUnit(Long.toString(unitService.getUnitByName(namaUnit).getId()));
 		performa.setReview(reviewService.countReviewByNama(namaUnit));
 		return new  ResponseEntity(performa, HttpStatus.OK);
 	}
 
 //	@GetMapping(value = "/performa/{")
-
 }

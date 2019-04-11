@@ -5,11 +5,20 @@ import com.project.propensib8.rest.DetailPerforma;
 import java.util.List;
 
 public class PerformaKaryawan {
+	String idUnit;
     String namaUnit;
     int review;
     int komplain;
+    
+    public String getIdUnit() {
+		return idUnit;
+	}
 
-    public String getNamaUnit() {
+	public void setIdUnit(String idUnit) {
+		this.idUnit = idUnit;
+	}
+
+	public String getNamaUnit() {
         return namaUnit;
     }
 
