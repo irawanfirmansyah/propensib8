@@ -14,6 +14,13 @@ import com.project.propensib8.repository.ParameterDB;
 public class ParameterServiceImpl implements ParameterService{
 	@Autowired
 	ParameterDB parameterDb;
+
+	@Override
+	public ParameterModel getParameterByName(String nama) {
+		// TODO Auto-generated method stub
+		return parameterDb.findByNama(nama);
+	}
+	
 	
 	//your code goes here ...
 }

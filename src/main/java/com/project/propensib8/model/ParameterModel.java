@@ -32,8 +32,8 @@ public class ParameterModel implements Serializable{
 	
 	@NotNull
 	@Size(max = 20)
-	@Column(name = "deskripsi", nullable = false)
-	private String deskripsi;
+	@Column(name = "nama", nullable = false)
+	private String nama;
 	
 	@OneToMany(mappedBy = "parameter", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JsonIgnore
@@ -47,12 +47,12 @@ public class ParameterModel implements Serializable{
 		this.id = id;
 	}
 
-	public String getDeskripsi() {
-		return deskripsi;
+	public String getNama() {
+		return nama;
 	}
 
-	public void setDeskripsi(String deskripsi) {
-		this.deskripsi = deskripsi;
+	public void setDeskripsi(String nama) {
+		this.nama = nama;
 	}
 
 	public List<UnitParameterModel> getListUnitParameter() {
