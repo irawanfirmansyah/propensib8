@@ -13,4 +13,7 @@ public interface KomplainService {
     KomplainModel getKomplainById(long id);
     List<KomplainModel> findAll();
     List<KomplainModel> findAllSolvedKomplain();
+    List<KomplainModel> getKomplainByNama(String nama);
+    int countKomplainByNama(String nama);
+    int countRatingByNama(String nama);
 }

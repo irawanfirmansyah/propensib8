@@ -126,10 +126,10 @@ public class PasienController {
 		return new ResponseEntity(detail, HttpStatus.OK);
 	}
 
-	@PostMapping( value = "/komplain/{namaPasien}/{tanggalPengisian}/solved")
-	public ResponseEntity<?> postBulanTanggal(@Valid @RequestBody Map<String, String> input, @ModelAttribute KomplainModel komplain) throws URISyntaxException, ParseException{
-
-	}
+//	@PostMapping( value = "/komplain/{namaPasien}/{tanggalPengisian}/solved")
+//	public ResponseEntity<?> postBulanTanggal(@Valid @RequestBody Map<String, String> input, @ModelAttribute KomplainModel komplain) throws URISyntaxException, ParseException{
+//
+//	}
 
 	@GetMapping( value = "/komplain/{tahun}/{bulan}")
 	public ResponseEntity<?> getSolvedKomplainByTahunBulan(@PathVariable ("tahun") String tahun, @PathVariable ("bulan") String bulan){

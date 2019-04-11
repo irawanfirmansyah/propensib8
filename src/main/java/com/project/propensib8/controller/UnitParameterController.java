@@ -3,17 +3,20 @@ package com.project.propensib8.controller;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import javax.validation.Valid;
 
+import com.project.propensib8.repository.KomplainDB;
+import com.project.propensib8.repository.UnitDB;
+import com.project.propensib8.rest.PerformaKaryawan;
+import com.project.propensib8.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.project.propensib8.model.KomplainModel;
 import com.project.propensib8.model.ParameterModel;
@@ -21,9 +24,7 @@ import com.project.propensib8.model.UnitModel;
 import com.project.propensib8.model.UnitParameterModel;
 import com.project.propensib8.repository.UnitParameterDB;
 import com.project.propensib8.rest.BaseResponse;
-import com.project.propensib8.service.ParameterService;
-import com.project.propensib8.service.UnitParameterService;
-import com.project.propensib8.service.UnitService;
+
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/unit-parameter")
@@ -34,6 +35,15 @@ public class UnitParameterController {
 	private UnitService unitService;
 	@Autowired
 	private ParameterService parameterService;
+	@Autowired
+	private UnitDB unitDb;
+	@Autowired
+	private KomplainDB komplainDb;
+	@Autowired
+	private KomplainService komplainService;
+	@Autowired
+	private ReviewService reviewService;
+
 
 	@PostMapping(value="/add")
 	public ResponseEntity<?> createUnitParameter(@Valid @RequestBody Map<String, String> res) throws URISyntaxException, ParseException{
@@ -59,5 +69,16 @@ public class UnitParameterController {
 //		return ResponseEntity.created(new URI("/survei/add/" + result.getId())).body(result);
 		return ResponseEntity.created(new URI("/survei")).body(response);
 	}
-	
+
+	@GetMapping(value = "/performa/{namaUnit}")
+	public ResponseEntity<?> getAllPerforma(@PathVariable ("namaUnit") String namaUnit) {
+		PerformaKaryawan performa = new PerformaKaryawan();
+		performa.setNamaUnit(namaUnit);
+		performa.setKomplain(komplainService.countKomplainByNama(namaUnit));
+		performa.setReview(reviewService.countReviewByNama(namaUnit));
+		return new  ResponseEntity(performa, HttpStatus.OK);
+	}
+
+//	@GetMapping(value = "/performa/{")
+
 }

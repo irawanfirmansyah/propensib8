@@ -90,8 +90,43 @@ public class KomplainServiceImpl implements KomplainService{
         return listOfKomplain;
     }
 
+    @Override
+    public List<KomplainModel> getKomplainByNama(String nama) {
+	    List<KomplainModel> listOfKomplain = new ArrayList<>();
+	    for(KomplainModel komplain : komplainDb.findAll()){
+	        if(komplain.getUnit().getNama().equalsIgnoreCase(nama)){
+	            listOfKomplain.add(komplain);
+            }
+        }
+        return listOfKomplain;
+    }
+
+    @Override
+    public int countKomplainByNama(String nama) {
+	    int count = 0;
+	    for(KomplainModel komplain: komplainDb.findAll()){
+	        if(komplain.getUnit().getNama().equals(nama)){
+	            count += 1;
+            }
+        }
+        return count;
+    }
+
+    @Override
+    public int countRatingByNama(String nama) {
+	    int count = 0;
+	    int denominator = 0;
+	    for(int num = 0; num < komplainDb.findAll().size(); num++){
+	        if(komplainDb.findAll().get(num).getUnit().getNama().equalsIgnoreCase(nama)) {
+                count += komplainDb.findAll().get(num).getSurvei().getRating();
+                denominator += 1;
+            }
+        }
+	    count /= denominator;
+        return count;
+    }
+
     public KomplainModel createKomplain(KomplainModel komplainModel) {
 		return komplainDb.save(komplainModel);
 	}
-
 }
