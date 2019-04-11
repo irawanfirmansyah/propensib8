@@ -12,4 +12,5 @@ public interface KomplainService {
     List<KomplainModel> getKomplainByNamaTanggal(String namaPasien, String tanggalPengisian);	
     KomplainModel getKomplainById(long id);
     List<KomplainModel> findAll();
+    List<KomplainModel> findAllSolvedKomplain();
 }

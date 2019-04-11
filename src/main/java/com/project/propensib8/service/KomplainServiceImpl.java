@@ -37,7 +37,13 @@ public class KomplainServiceImpl implements KomplainService{
 
     @Override
     public KomplainModel getKomplainByNamaPasien(String namaPasien) {
-        return null;
+	    KomplainModel picked = null;
+	    for(KomplainModel komplain: komplainDb.findAll()) {
+            if (komplain.getSurvei().getPasien().getNama().equalsIgnoreCase(namaPasien)) {
+                picked = komplain;
+            }
+        }
+        return picked;
     }
 
     @Override
@@ -73,7 +79,18 @@ public class KomplainServiceImpl implements KomplainService{
 	    return listOfKomplain;
 	}
 
-	public KomplainModel createKomplain(KomplainModel komplainModel) {
+    @Override
+    public List<KomplainModel> findAllSolvedKomplain() {
+	    List<KomplainModel> listOfKomplain = new ArrayList<>();
+	    for(KomplainModel komplain : komplainDb.findAll()){
+	        if(komplain.isSolved() == true){
+                listOfKomplain.add(komplain);
+            }
+        }
+        return listOfKomplain;
+    }
+
+    public KomplainModel createKomplain(KomplainModel komplainModel) {
 		return komplainDb.save(komplainModel);
 	}
 

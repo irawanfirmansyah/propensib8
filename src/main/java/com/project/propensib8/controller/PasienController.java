@@ -1,28 +1,29 @@
 package com.project.propensib8.controller;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.net.URISyntaxException;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.project.propensib8.model.KomplainModel;
 import com.project.propensib8.model.PasienModel;
 import com.project.propensib8.repository.KomplainDB;
 import com.project.propensib8.repository.PasienDB;
-import com.project.propensib8.rest.KomplainDetail;
 import com.project.propensib8.rest.KomplainDetailProfile;
 import com.project.propensib8.rest.KomplainPasienDetail;
 import com.project.propensib8.service.KomplainService;
 import com.project.propensib8.service.PasienService;
+
+import javax.print.URIException;
+import javax.validation.Valid;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
@@ -56,7 +57,6 @@ public class PasienController {
 			String lastPasien = "";
 			String lastTanggal = "";
 			String tanggalNow = "";
-
 
 			//Kalau list yang ingin di return msh kosong, langsung buaat object
 			if(res.size() == 0) {
@@ -111,15 +111,41 @@ public class PasienController {
 
 		return new ResponseEntity(res, HttpStatus.OK);
 	}
+
 	@GetMapping(value = "/komplain/{namaPasien}/{tanggalPengisian}")
 	public ResponseEntity<?> getDetailKomplain(@PathVariable ("namaPasien") String namaPasien, @PathVariable ("tanggalPengisian") String tanggalPengisian){
 		KomplainDetailProfile detail = new KomplainDetailProfile();
 		PasienModel pasien = komplainService.getPasienByNamaTanggal(namaPasien, tanggalPengisian);
 		List<KomplainModel> listOfKomplain = komplainService.getKomplainByNamaTanggal(namaPasien, tanggalPengisian);
+		detail.setNomorHp(pasien.getNomorHp());
+		detail.setNomorTelefon(pasien.getNomorTelepon());
 		detail.setAlamat(pasien.getAlamat());
 		detail.setListKomplain(listOfKomplain);
 		detail.setNamaPasien(namaPasien);
 		detail.setTanggalPengisian(tanggalPengisian);
 		return new ResponseEntity(detail, HttpStatus.OK);
+	}
+
+	@PostMapping( value = "/komplain/{namaPasien}/{tanggalPengisian}/solved")
+	public ResponseEntity<?> postBulanTanggal(@Valid @RequestBody Map<String, String> input, @ModelAttribute KomplainModel komplain) throws URISyntaxException, ParseException{
+
+	}
+
+	@GetMapping( value = "/komplain/{tahun}/{bulan}")
+	public ResponseEntity<?> getSolvedKomplainByTahunBulan(@PathVariable ("tahun") String tahun, @PathVariable ("bulan") String bulan){
+		List<KomplainModel> listOfAllKomplain = komplainService.findAllSolvedKomplain();
+		List<KomplainModel> listOfSolvedByParam = new ArrayList<>();
+
+		for(KomplainModel komplain : listOfAllKomplain){
+			java.sql.Date sqlDate = komplain.getSurvei().getTanggal();
+			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+			String resDate = formatter.format(sqlDate);
+
+			String[] dateSplit = resDate.split("-");
+			if(dateSplit[0].equals(tahun) && dateSplit[1].equals(bulan)){
+				listOfSolvedByParam.add(komplain);
+			}
+		}
+		return new ResponseEntity(listOfSolvedByParam, HttpStatus.OK);
 	}
 }
