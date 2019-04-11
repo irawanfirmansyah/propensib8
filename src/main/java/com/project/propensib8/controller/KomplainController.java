@@ -62,6 +62,8 @@ public class KomplainController {
 		result.setDeskripsi(res.get("deskripsi"));
 		result.setUnit(unitModel);
 		result.setSurvei(surveiModel);
+		result.setSolved(false);
+		result.setResult("");
 		result = komplainDb.save(result);
 		BaseResponse<KomplainModel> response = new BaseResponse<>();
 		
