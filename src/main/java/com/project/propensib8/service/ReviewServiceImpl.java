@@ -44,22 +44,22 @@ public class ReviewServiceImpl implements ReviewService {
 		List<ReviewModel> listOfReview = reviewDb.findAll();
 		int counter = 0;
 		if (reviewDb.findAll().size() <= 3 && reviewDb.findAll().size() >0) {
-			for (ReviewModel review : reviewDb.findAll()) {
-				if (review.getUnit().getNama().equalsIgnoreCase(nama)) {
-					list.add(review.getSurvei().getPasien().getNama()+","+review.getDeskripsi());
+			for (int i=0 ; i<reviewDb.findAll().size() ; i++) {
+				if (listOfReview.get(i).getUnit().getNama().equalsIgnoreCase(nama)) {
+					list.add(listOfReview.get(i).getSurvei().getPasien().getNama()+","+listOfReview.get(i).getDeskripsi());
 				}
 			}
 		} else {
-			for (ReviewModel review : reviewDb.findAll()) {
+			for (int i=0 ; i<reviewDb.findAll().size() ; i++) {
 				if(counter != 3) {
-					if (review.getUnit().getNama().equalsIgnoreCase(nama)){
-						list.add(review.getSurvei().getPasien().getNama()+","+review.getDeskripsi());
+					if (listOfReview.get(i).getUnit().getNama().equalsIgnoreCase(nama)){
+						list.add(listOfReview.get(i).getSurvei().getPasien().getNama()+","+listOfReview.get(i).getDeskripsi());
+						counter ++;
 					}
 				}
 				else {
 					break;
 				}
-				counter ++;
 			}
 		}
 		return list;
