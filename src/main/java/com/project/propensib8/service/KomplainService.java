@@ -12,4 +12,11 @@ public interface KomplainService {
     List<KomplainModel> getKomplainByNamaTanggal(String namaPasien, String tanggalPengisian);	
     KomplainModel getKomplainById(long id);
     List<KomplainModel> findAll();
+    List<KomplainModel> findAllSolvedKomplain();
+    List<KomplainModel> getKomplainByNama(String nama);
+    int countKomplainByNama(String nama);
+    int countRatingByNama(String nama);
+    List<KomplainModel> getKomplainByNamaUnit(String nama);
+    List<String> getNamaPasienKomplainByNama(String nama);
+    List<String> getDeskripsiKomplainByNama(String nama);
 }
