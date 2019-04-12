@@ -11,7 +11,9 @@ import javax.validation.Valid;
 
 import com.project.propensib8.repository.KomplainDB;
 import com.project.propensib8.repository.UnitDB;
+import com.project.propensib8.rest.DetailPerforma;
 import com.project.propensib8.rest.PerformaKaryawan;
+import com.project.propensib8.rest.RestKomplainReview;
 import com.project.propensib8.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -80,5 +82,15 @@ public class UnitParameterController {
 		return new  ResponseEntity(performa, HttpStatus.OK);
 	}
 
-//	@GetMapping(value = "/performa/{")
+	@GetMapping(value = "/detail-performa/{namaUnit}")
+	public ResponseEntity<?> getDetailPerforma(@PathVariable ("namaUnit") String namaUnit){
+		DetailPerforma detailPerforma = new DetailPerforma();
+		RestKomplainReview res = new RestKomplainReview();
+		res.setListReview(reviewService.getNamaPasienReviewByNama(namaUnit));
+		res.setListKomplain(komplainService.getNamaPasienKomplainByNama(namaUnit));
+		detailPerforma.setKomplain(komplainService.countKomplainByNama(namaUnit));
+		detailPerforma.setReview(reviewService.countReviewByNama(namaUnit));
+		detailPerforma.setRes(res);
+		return new ResponseEntity<>(detailPerforma, HttpStatus.OK);
+	}
 }
