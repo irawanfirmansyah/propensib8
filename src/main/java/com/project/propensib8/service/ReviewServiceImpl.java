@@ -42,24 +42,9 @@ public class ReviewServiceImpl implements ReviewService {
 	public List<String> getNamaPasienReviewByNama(String nama) {
 		List<String> list = new ArrayList<>();
 		List<ReviewModel> listOfReview = reviewDb.findAll();
-		int counter = 0;
-		if (reviewDb.findAll().size() <= 3 && reviewDb.findAll().size() >0) {
-			for (int i=0 ; i<reviewDb.findAll().size() ; i++) {
-				if (listOfReview.get(i).getUnit().getNama().equalsIgnoreCase(nama)) {
-					list.add(listOfReview.get(i).getSurvei().getPasien().getNama()+","+listOfReview.get(i).getDeskripsi());
-				}
-			}
-		} else {
-			for (int i=0 ; i<reviewDb.findAll().size() ; i++) {
-				if(counter != 3) {
-					if (listOfReview.get(i).getUnit().getNama().equalsIgnoreCase(nama)){
-						list.add(listOfReview.get(i).getSurvei().getPasien().getNama()+","+listOfReview.get(i).getDeskripsi());
-						counter ++;
-					}
-				}
-				else {
-					break;
-				}
+		for(ReviewModel review: listOfReview) {
+			if (review.getUnit().getNama().equalsIgnoreCase(nama)){
+				list.add(review.getSurvei().getPasien().getNama());
 			}
 		}
 		return list;
@@ -69,19 +54,9 @@ public class ReviewServiceImpl implements ReviewService {
 	public List<String> getDeskripsiReviewByNama(String nama) {
 		List<String> list = new ArrayList<>();
 		List<ReviewModel> listOfReview = reviewDb.findAll();
-		if (reviewDb.findAll().size() <= 3) {
-			for (ReviewModel review : reviewDb.findAll()) {
-				if (review.getUnit().getNama().equalsIgnoreCase(nama)) {
-					list.add(review.getDeskripsi());
-				}
-			}
-		} else {
-			int counter = 1;
-			for (ReviewModel review : reviewDb.findAll()) {
-				if (review.getUnit().getNama().equalsIgnoreCase(nama) && counter <= 3) {
-					list.add(review.getDeskripsi());
-					counter += 1;
-				}
+		for(ReviewModel review: listOfReview){
+			if(review.getUnit().getNama().equalsIgnoreCase(nama)){
+				list.add(review.getDeskripsi());
 			}
 		}
 		return list;

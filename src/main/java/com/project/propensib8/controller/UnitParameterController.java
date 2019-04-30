@@ -94,5 +94,4 @@ public class UnitParameterController {
 		return new ResponseEntity<>(detailPerforma, HttpStatus.OK);
 	}
 
-
 }

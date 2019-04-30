@@ -73,7 +73,7 @@ public class KomplainServiceImpl implements KomplainService{
 	public List<KomplainModel> findAll() {
 		List<KomplainModel> listOfKomplain = new ArrayList<>();
 		for(KomplainModel komplain : komplainDb.findAll()){
-		    if(komplain.getSurvei().getRating() <= 3 && komplain.isSolved() == false){
+		    if(komplain.getSurvei().getRating() <= 3 && komplain.isSolvedMarketing() == false){
 		        listOfKomplain.add(komplain);
             }
         }
@@ -84,7 +84,7 @@ public class KomplainServiceImpl implements KomplainService{
     public List<KomplainModel> findAllSolvedKomplain() {
 	    List<KomplainModel> listOfKomplain = new ArrayList<>();
 	    for(KomplainModel komplain : komplainDb.findAll()){
-	        if(komplain.isSolved() == true){
+	        if(komplain.isSolvedMarketing() == true){
                 listOfKomplain.add(komplain);
             }
         }
@@ -144,49 +144,22 @@ public class KomplainServiceImpl implements KomplainService{
     @Override
 	public List<String> getNamaPasienKomplainByNama(String nama) {
 		List<String> list = new ArrayList<>();
-		List<KomplainModel> listOfReview = komplainDb.findAll();
-		int counter = 0;
-		if (komplainDb.findAll().size() <= 3 && komplainDb.findAll().size() >0) {
-			for (KomplainModel komplain : komplainDb.findAll()) {
-				if (komplain.getUnit().getNama().equalsIgnoreCase(nama)) {
-					list.add(komplain.getSurvei().getPasien().getNama()+","+komplain.getDeskripsi());
-					System.out.println(komplain.getSurvei().getPasien().getNama()+","+komplain.getDeskripsi());
-				}
-			}
-		} else {
-			for (KomplainModel komplain : komplainDb.findAll()) {
-				if(counter != 3) {
-					if (komplain.getUnit().getNama().equalsIgnoreCase(nama)) {
-						list.add(komplain.getSurvei().getPasien().getNama()+","+komplain.getDeskripsi());
-						counter ++;
-					}
-				}
-				else {
-					break;
-				}
-			}
-		}
-		for(int i=0 ; i<list.size() ; i++) {
-			System.out.println(list.get(i));
-		}
+		List<KomplainModel> listOfKomplain = komplainDb.findAll();
+		for(KomplainModel komplain : listOfKomplain) {
+		    if(komplain.getUnit().getNama().equalsIgnoreCase(nama) && komplain.isSolvedMarketing() == true){
+		        list.add(komplain.getSurvei().getPasien().getNama());
+            }
+        }
 		return list;
 	}
 
     @Override
     public List<String> getDeskripsiKomplainByNama(String nama) {
         List<String> list = new ArrayList<>();
-        List<KomplainModel> listOfReview = komplainDb.findAll();
-        if (komplainDb.findAll().size() <= 3) {
-            for (KomplainModel komplain : komplainDb.findAll()) {
-                if (komplain.getUnit().getNama().equalsIgnoreCase(nama)) {
-                    list.add(komplain.getDeskripsi());
-                }
-            }
-        } else {
-            for (KomplainModel komplain : komplainDb.findAll()) {
-                if (komplain.getUnit().getNama().equalsIgnoreCase(nama)) {
-                    list.add(komplain.getDeskripsi());
-                }
+        List<KomplainModel> listOfKomplain = komplainDb.findAll();
+        for(KomplainModel komplain : listOfKomplain) {
+            if(komplain.getUnit().getNama().equalsIgnoreCase(nama) && komplain.isSolvedMarketing() == true){
+                list.add(komplain.getDeskripsi());
             }
         }
         return list;

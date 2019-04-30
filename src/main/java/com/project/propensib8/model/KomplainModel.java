@@ -55,9 +55,17 @@ public class KomplainModel implements Serializable {
 	@JsonIgnore
 	private UnitModel unit;
 	
-	@Column(name = "is_solved", nullable = false)
+	@Column(name = "is_solved_marketing", nullable = false)
 	@Type(type = "org.hibernate.type.NumericBooleanType")
-	private boolean isSolved;
+	private boolean isSolvedMarketing;
+
+	@Column(name = "is_solved_hr", nullable = false)
+	@Type(type = "org.hibernate.type.NumericBooleanType")
+	private boolean isSolvedHR;
+
+	public boolean isSolvedHR() { return isSolvedHR; }
+
+	public void setSolvedHR(boolean solvedHR) { isSolvedHR = solvedHR; }
 	
 	public long getId() {
 		return id;
@@ -91,12 +99,12 @@ public class KomplainModel implements Serializable {
 		this.unit = unit;
 	}
 
-	public boolean isSolved() {
-		return isSolved;
+	public boolean isSolvedMarketing() {
+		return isSolvedMarketing;
 	}
 
-	public void setSolved(boolean isSolved) {
-		this.isSolved = isSolved;
+	public void setSolvedMarketing(boolean isSolvedMarketing) {
+		this.isSolvedMarketing = isSolvedMarketing;
 	}
 
 	public SurveiModel getSurvei() {
