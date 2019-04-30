@@ -3,8 +3,6 @@ package com.project.propensib8.controller;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 import javax.validation.Valid;
@@ -13,19 +11,19 @@ import com.project.propensib8.repository.KomplainDB;
 import com.project.propensib8.repository.UnitDB;
 import com.project.propensib8.rest.DetailPerforma;
 import com.project.propensib8.rest.PerformaKaryawan;
-import com.project.propensib8.rest.RestKomplainReview;
 import com.project.propensib8.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.project.propensib8.model.KomplainModel;
 import com.project.propensib8.model.ParameterModel;
 import com.project.propensib8.model.UnitModel;
 import com.project.propensib8.model.UnitParameterModel;
 import com.project.propensib8.repository.UnitParameterDB;
 import com.project.propensib8.rest.BaseResponse;
+import com.project.propensib8.rest.ReviewRest;
+import com.project.propensib8.rest.KomplainRest;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
@@ -85,12 +83,10 @@ public class UnitParameterController {
 	@GetMapping(value = "/detail-performa/{namaUnit}")
 	public ResponseEntity<?> getDetailPerforma(@PathVariable ("namaUnit") String namaUnit){
 		DetailPerforma detailPerforma = new DetailPerforma();
-		RestKomplainReview res = new RestKomplainReview();
-		res.setListReview(reviewService.getNamaPasienReviewByNama(namaUnit));
-		res.setListKomplain(komplainService.getNamaPasienKomplainByNama(namaUnit));
+		detailPerforma.setReviewRest(reviewService.createReviewRest());
+		detailPerforma.setKomplainRest(komplainService.createKomplainRest());
 		detailPerforma.setKomplain(komplainService.countKomplainByNama(namaUnit));
 		detailPerforma.setReview(reviewService.countReviewByNama(namaUnit));
-		detailPerforma.setRes(res);
 		return new ResponseEntity<>(detailPerforma, HttpStatus.OK);
 	}
 

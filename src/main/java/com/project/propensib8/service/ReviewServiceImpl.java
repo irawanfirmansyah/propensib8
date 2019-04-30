@@ -2,10 +2,12 @@ package com.project.propensib8.service;
 
 import com.project.propensib8.model.ReviewModel;
 import com.project.propensib8.repository.ReviewDB;
+import com.project.propensib8.rest.ReviewRest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -58,6 +60,25 @@ public class ReviewServiceImpl implements ReviewService {
 			if(review.getUnit().getNama().equalsIgnoreCase(nama)){
 				list.add(review.getDeskripsi());
 			}
+		}
+		return list;
+	}
+
+	@Override
+	public List<ReviewRest> createReviewRest() {
+		List<ReviewRest> list = new ArrayList<>();
+		for(ReviewModel review: reviewDb.findAll()){
+			ReviewRest reviewRest = new ReviewRest();
+			reviewRest.setNama(review.getSurvei().getPasien().getNama());
+			reviewRest.setDeskripsi(review.getDeskripsi());
+			reviewRest.setRating(review.getSurvei().getRating());
+
+			java.sql.Date sqlDate = review.getSurvei().getTanggal();
+			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+			String resDate = formatter.format(sqlDate);
+			reviewRest.setTanggalIsi(resDate);
+
+			list.add(reviewRest);
 		}
 		return list;
 	}

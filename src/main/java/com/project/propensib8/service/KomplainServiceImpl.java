@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.project.propensib8.rest.KomplainRest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -161,6 +162,25 @@ public class KomplainServiceImpl implements KomplainService{
             if(komplain.getUnit().getNama().equalsIgnoreCase(nama) && komplain.isSolvedMarketing() == true){
                 list.add(komplain.getDeskripsi());
             }
+        }
+        return list;
+    }
+
+    @Override
+    public List<KomplainRest> createKomplainRest() {
+        List<KomplainRest> list = new ArrayList<>();
+        for(KomplainModel komplain: komplainDb.findAll()){
+            KomplainRest komplainRest = new KomplainRest();
+            komplainRest.setNama(komplain.getSurvei().getPasien().getNama());
+            komplainRest.setDeskripsi(komplain.getDeskripsi());
+            komplainRest.setRating(komplain.getSurvei().getRating());
+
+            java.sql.Date sqlDate = komplain.getSurvei().getTanggal();
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+            String resDate = formatter.format(sqlDate);
+            komplainRest.setTanggalIsi(resDate);
+
+            list.add(komplainRest);
         }
         return list;
     }
