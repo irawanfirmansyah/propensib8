@@ -15,10 +15,11 @@ public interface KomplainService {
     List<KomplainModel> findAll();
     List<KomplainModel> findAllSolvedKomplain();
     List<KomplainModel> getKomplainByNama(String nama);
+    int countSolvedComplaints(String namaUnit);
     int countKomplainByNama(String nama);
     int countRatingByNama(String nama);
     List<KomplainModel> getKomplainByNamaUnit(String nama);
     List<String> getNamaPasienKomplainByNama(String nama);
     List<String> getDeskripsiKomplainByNama(String nama);
-    List<KomplainRest> createKomplainRest();
+    List<KomplainRest> createKomplainRest(String namaUnit);
 }

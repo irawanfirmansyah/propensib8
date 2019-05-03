@@ -8,10 +8,21 @@ import java.util.List;
 public class DetailPerforma {
     int review;
     int komplain;
+    int komplainSolved;
     List<ReviewRest> reviewRest;
     List<KomplainRest> komplainRest;
+    
+    
 
-    public int getReview() {
+    public int getKomplainSolved() {
+		return komplainSolved;
+	}
+
+	public void setKomplainSolved(int komplainSolved) {
+		this.komplainSolved = komplainSolved;
+	}
+
+	public int getReview() {
         return review;
     }
 

@@ -9,8 +9,19 @@ public class PerformaKaryawan {
     String namaUnit;
     int review;
     int komplain;
+    int komplainSolved;
     
-    public String getIdUnit() {
+    
+    
+    public int getKomplainSolved() {
+		return komplainSolved;
+	}
+
+	public void setKomplainSolved(int komplainSolved) {
+		this.komplainSolved = komplainSolved;
+	}
+
+	public String getIdUnit() {
 		return idUnit;
 	}
 

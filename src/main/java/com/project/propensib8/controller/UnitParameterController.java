@@ -75,6 +75,7 @@ public class UnitParameterController {
 		PerformaKaryawan performa = new PerformaKaryawan();
 		performa.setNamaUnit(namaUnit);
 		performa.setKomplain(komplainService.countKomplainByNama(namaUnit));
+		performa.setKomplainSolved(komplainService.countSolvedComplaints(namaUnit));
 		performa.setIdUnit(Long.toString(unitService.getUnitByName(namaUnit).getId()));
 		performa.setReview(reviewService.countReviewByNama(namaUnit));
 		return new  ResponseEntity(performa, HttpStatus.OK);
@@ -83,9 +84,10 @@ public class UnitParameterController {
 	@GetMapping(value = "/detail-performa/{namaUnit}")
 	public ResponseEntity<?> getDetailPerforma(@PathVariable ("namaUnit") String namaUnit){
 		DetailPerforma detailPerforma = new DetailPerforma();
-		detailPerforma.setReviewRest(reviewService.createReviewRest());
-		detailPerforma.setKomplainRest(komplainService.createKomplainRest());
+		detailPerforma.setReviewRest(reviewService.createReviewRest(namaUnit));
+		detailPerforma.setKomplainRest(komplainService.createKomplainRest(namaUnit));
 		detailPerforma.setKomplain(komplainService.countKomplainByNama(namaUnit));
+		detailPerforma.setKomplainSolved(komplainService.countSolvedComplaints(namaUnit));
 		detailPerforma.setReview(reviewService.countReviewByNama(namaUnit));
 		return new ResponseEntity<>(detailPerforma, HttpStatus.OK);
 	}

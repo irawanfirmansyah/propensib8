@@ -10,5 +10,5 @@ public interface ReviewService {
     List<ReviewModel> getReviewByNama(String nama);
     List<String> getNamaPasienReviewByNama(String nama);
     List<String> getDeskripsiReviewByNama(String nama);
-    List<ReviewRest> createReviewRest();
+    List<ReviewRest> createReviewRest(String namaUnit);
 }

@@ -65,23 +65,21 @@ public class ReviewServiceImpl implements ReviewService {
 	}
 
 	@Override
-	public List<ReviewRest> createReviewRest() {
+	public List<ReviewRest> createReviewRest(String namaUnit) {
 		List<ReviewRest> list = new ArrayList<>();
 		for(ReviewModel review: reviewDb.findAll()){
-			ReviewRest reviewRest = new ReviewRest();
-			reviewRest.setNama(review.getSurvei().getPasien().getNama());
-			reviewRest.setDeskripsi(review.getDeskripsi());
-			reviewRest.setRating(review.getSurvei().getRating());
-
-			java.sql.Date sqlDate = review.getSurvei().getTanggal();
-			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-			String resDate = formatter.format(sqlDate);
-			reviewRest.setTanggalIsi(resDate);
-
-			list.add(reviewRest);
+			if(review.getUnit().getNama().equalsIgnoreCase(namaUnit)) {
+				ReviewRest reviewRest = new ReviewRest();
+				reviewRest.setNama(review.getSurvei().getPasien().getNama());
+				reviewRest.setDeskripsi(review.getDeskripsi());
+				reviewRest.setRating(review.getSurvei().getRating());
+				java.sql.Date sqlDate = review.getSurvei().getTanggal();
+				SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+				String resDate = formatter.format(sqlDate);
+				reviewRest.setTanggalIsi(resDate);
+				list.add(reviewRest);
+			}
 		}
 		return list;
 	}
-
-
 }
