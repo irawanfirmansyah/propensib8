@@ -2,10 +2,12 @@ package com.project.propensib8.service;
 
 import com.project.propensib8.model.ReviewModel;
 import com.project.propensib8.repository.ReviewDB;
+import com.project.propensib8.rest.ReviewRest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -42,24 +44,9 @@ public class ReviewServiceImpl implements ReviewService {
 	public List<String> getNamaPasienReviewByNama(String nama) {
 		List<String> list = new ArrayList<>();
 		List<ReviewModel> listOfReview = reviewDb.findAll();
-		int counter = 0;
-		if (reviewDb.findAll().size() <= 3 && reviewDb.findAll().size() >0) {
-			for (int i=0 ; i<reviewDb.findAll().size() ; i++) {
-				if (listOfReview.get(i).getUnit().getNama().equalsIgnoreCase(nama)) {
-					list.add(listOfReview.get(i).getSurvei().getPasien().getNama()+","+listOfReview.get(i).getDeskripsi());
-				}
-			}
-		} else {
-			for (int i=0 ; i<reviewDb.findAll().size() ; i++) {
-				if(counter != 3) {
-					if (listOfReview.get(i).getUnit().getNama().equalsIgnoreCase(nama)){
-						list.add(listOfReview.get(i).getSurvei().getPasien().getNama()+","+listOfReview.get(i).getDeskripsi());
-						counter ++;
-					}
-				}
-				else {
-					break;
-				}
+		for(ReviewModel review: listOfReview) {
+			if (review.getUnit().getNama().equalsIgnoreCase(nama)){
+				list.add(review.getSurvei().getPasien().getNama());
 			}
 		}
 		return list;
@@ -69,20 +56,29 @@ public class ReviewServiceImpl implements ReviewService {
 	public List<String> getDeskripsiReviewByNama(String nama) {
 		List<String> list = new ArrayList<>();
 		List<ReviewModel> listOfReview = reviewDb.findAll();
-		if (reviewDb.findAll().size() <= 3) {
-			for (ReviewModel review : reviewDb.findAll()) {
-				if (review.getUnit().getNama().equalsIgnoreCase(nama)) {
-					list.add(review.getDeskripsi());
-				}
+		for(ReviewModel review: listOfReview){
+			if(review.getUnit().getNama().equalsIgnoreCase(nama)){
+				list.add(review.getDeskripsi());
 			}
-		} else {
-			int counter = 1;
-			for (ReviewModel review : reviewDb.findAll()) {
-				if (review.getUnit().getNama().equalsIgnoreCase(nama) && counter <= 3) {
-					list.add(review.getDeskripsi());
-					counter += 1;
-				}
-			}
+		}
+		return list;
+	}
+
+	@Override
+	public List<ReviewRest> createReviewRest() {
+		List<ReviewRest> list = new ArrayList<>();
+		for(ReviewModel review: reviewDb.findAll()){
+			ReviewRest reviewRest = new ReviewRest();
+			reviewRest.setNama(review.getSurvei().getPasien().getNama());
+			reviewRest.setDeskripsi(review.getDeskripsi());
+			reviewRest.setRating(review.getSurvei().getRating());
+
+			java.sql.Date sqlDate = review.getSurvei().getTanggal();
+			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+			String resDate = formatter.format(sqlDate);
+			reviewRest.setTanggalIsi(resDate);
+
+			list.add(reviewRest);
 		}
 		return list;
 	}

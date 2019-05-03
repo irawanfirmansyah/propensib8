@@ -8,7 +8,8 @@ import java.util.List;
 public class DetailPerforma {
     int review;
     int komplain;
-    RestKomplainReview res;
+    List<ReviewRest> reviewRest;
+    List<KomplainRest> komplainRest;
 
     public int getReview() {
         return review;
@@ -26,12 +27,13 @@ public class DetailPerforma {
         this.komplain = komplain;
     }
 
-    public RestKomplainReview getRes() {
-        return res;
-    }
+    public List<ReviewRest> getReviewRest() { return reviewRest; }
 
-    public void setRes(RestKomplainReview res) {
-        this.res = res;
-    }
+    public void setReviewRest(List<ReviewRest> reviewRest) { this.reviewRest = reviewRest; }
+
+    public List<KomplainRest> getKomplainRest() { return komplainRest; }
+
+    public void setKomplainRest(List<KomplainRest> komplainRest) { this.komplainRest = komplainRest; }
+
 
 }

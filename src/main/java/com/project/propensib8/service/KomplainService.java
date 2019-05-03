@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.project.propensib8.model.KomplainModel;
 import com.project.propensib8.model.PasienModel;
+import com.project.propensib8.rest.KomplainRest;
 
 public interface KomplainService {
 	
@@ -19,4 +20,5 @@ public interface KomplainService {
     List<KomplainModel> getKomplainByNamaUnit(String nama);
     List<String> getNamaPasienKomplainByNama(String nama);
     List<String> getDeskripsiKomplainByNama(String nama);
+    List<KomplainRest> createKomplainRest();
 }
