@@ -3,7 +3,6 @@ package com.project.propensib8.service;
 import com.project.propensib8.model.UnitParameterModel;
 import com.project.propensib8.repository.UnitParameterDB;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import java.util.ArrayList;
 import java.util.List;
 public class UnitParameterServiceImpl implements UnitParameterService{

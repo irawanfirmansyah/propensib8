@@ -1,5 +1,6 @@
 package com.project.propensib8.service;
 
+import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -201,6 +202,32 @@ public class KomplainServiceImpl implements KomplainService{
 			}
 		}
 		return list;
+	}
+
+	@Override
+	public List<String> isiKomplain(Date startDate, Date endDate, String tipeSurvei) {
+		List<KomplainModel> list = this.findAllByTanggal(startDate,endDate);
+		List<String> listOfKomplain = new ArrayList<>();
+		for(KomplainModel komplain : list){
+			if(komplain.getSurvei().getJenisSurvei().equalsIgnoreCase(tipeSurvei)){
+				listOfKomplain.add(komplain.getDeskripsi());
+			}
+			else{
+				listOfKomplain.add(komplain.getDeskripsi());
+			}
+			if(listOfKomplain.size() == 5){
+				break;
+			}
+		}
+		return listOfKomplain;
+	}
+
+	@Override
+	public List<KomplainModel> findAllByTanggal(Date startDate, Date endDate) {
+		if(startDate == null || endDate == null){
+			return komplainDb.findAll();
+		}
+		return komplainDb.findAllByTanggalBetween(startDate, endDate);
 	}
 
 	public KomplainModel createKomplain(KomplainModel komplainModel) {

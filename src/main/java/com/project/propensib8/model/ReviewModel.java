@@ -82,6 +82,4 @@ public class ReviewModel implements Serializable {
 	public void setUnit(UnitModel unit) {
 		this.unit = unit;
 	}
-	
-	
 }
