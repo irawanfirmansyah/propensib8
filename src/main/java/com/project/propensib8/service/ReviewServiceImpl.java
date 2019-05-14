@@ -84,7 +84,6 @@ public class ReviewServiceImpl implements ReviewService {
 		}
 		return list;
 	}
-
 	@Override
 	public String getMostCommonUnit(Date startDate, Date endDate, String tipeSurvei) {
 		List<ReviewModel> list = this.findAllByTanggal(startDate, endDate);

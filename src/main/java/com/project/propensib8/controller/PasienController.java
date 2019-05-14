@@ -67,8 +67,8 @@ public class PasienController {
 				java.sql.Date sqlDate = k.getSurvei().getTanggal();
 				SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 				String resDate = formatter.format(sqlDate);
-				details.setTanggalKomplain(resDate);
 
+				details.setTanggalKomplain(resDate);
 				List<KomplainModel> listKomplain = new ArrayList<>();
 				listKomplain.add(k);
 				details.setListKomplain(listKomplain);
