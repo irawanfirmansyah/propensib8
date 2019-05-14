@@ -1,5 +1,6 @@
 package com.project.propensib8.service;
 
+import java.sql.Date;
 import java.util.List;
 
 import com.project.propensib8.model.KomplainModel;
@@ -22,4 +23,6 @@ public interface KomplainService {
     List<String> getNamaPasienKomplainByNama(String nama);
     List<String> getDeskripsiKomplainByNama(String nama);
     List<KomplainRest> createKomplainRest(String namaUnit);
+    List<String> isiKomplain(Date startDate, Date endDate, String tipeSurvei);
+    List<KomplainModel> findAllByTanggal(Date startDate, Date endDate);
 }

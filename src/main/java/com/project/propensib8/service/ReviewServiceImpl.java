@@ -8,9 +8,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
+import java.util.Map;
 import java.util.List;
-import java.util.Random;
+import java.sql.Date;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 @Service
 @Transactional
@@ -81,5 +83,59 @@ public class ReviewServiceImpl implements ReviewService {
 			}
 		}
 		return list;
+	}
+	@Override
+	public String getMostCommonUnit(Date startDate, Date endDate, String tipeSurvei) {
+		List<ReviewModel> list = this.findAllByTanggal(startDate, endDate);
+		List<ReviewModel> filterTipeSurvei = new ArrayList<>();
+
+		for(ReviewModel review : list){
+			if(review.getSurvei().getJenisSurvei().equalsIgnoreCase(tipeSurvei)){
+				filterTipeSurvei.add(review);
+			}
+			else {
+				filterTipeSurvei.add(review);
+			}
+		}
+		Map<String, Integer> map = new HashMap<>();
+		for(ReviewModel review : filterTipeSurvei){
+			Integer val = map.get(review.getUnit().getNama());
+			map.put(review.getUnit().getNama(), val == null ? 1 : val + 1);
+		}
+
+		Map.Entry<String, Integer> max = null;
+
+		for(Map.Entry<String, Integer> unit : map.entrySet()){
+			if(max == null || unit.getValue() > max.getValue()){
+				max = unit;
+			}
+		}
+		return max.getKey();
+	}
+
+	@Override
+	public List<ReviewModel> findAllByTanggal(Date startDate, Date endDate) {
+		if(startDate == null || endDate == null){
+			return reviewDb.findAll();
+		}
+		return reviewDb.findAllByTanggalBetween(startDate, endDate);
+	}
+
+	@Override
+	public List<String> isiReview(Date startDate, Date endDate, String tipeSurvei) {
+		List<ReviewModel> list = this.findAllByTanggal(startDate,endDate);
+		List<String> listOfReview = new ArrayList<>();
+		for(ReviewModel review : list){
+			if (review.getSurvei().getJenisSurvei().equalsIgnoreCase(tipeSurvei)) {
+				listOfReview.add(review.getDeskripsi());
+			}
+			else {
+				listOfReview.add(review.getDeskripsi());
+			}
+			if(listOfReview.size() == 5){
+				break;
+			}
+		}
+		return listOfReview;
 	}
 }

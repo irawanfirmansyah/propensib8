@@ -63,6 +63,9 @@ public class KomplainModel implements Serializable {
 	@Type(type = "org.hibernate.type.NumericBooleanType")
 	private boolean isSolvedHR;
 
+	@Column(name = "tanggal", nullable = false)
+	private Date tanggal;
+
 	public boolean isSolvedHR() { return isSolvedHR; }
 
 	public void setSolvedHR(boolean solvedHR) { isSolvedHR = solvedHR; }
@@ -114,4 +117,8 @@ public class KomplainModel implements Serializable {
 	public void setSurvei(SurveiModel survei) {
 		this.survei = survei;
 	}
+
+	public Date getTanggal() { return tanggal; }
+
+	public void setTanggal(Date tanggal) { this.tanggal = tanggal; }
 }

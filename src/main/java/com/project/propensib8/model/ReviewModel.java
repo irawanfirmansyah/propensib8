@@ -38,6 +38,9 @@ public class ReviewModel implements Serializable {
 	@Size(max = 255)
 	@Column(name = "deskripsi", nullable = false)
 	private String deskripsi;
+
+	@Column(name = "tanggal", nullable = false)
+	private Date tanggal;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "id_survei", referencedColumnName = "id", nullable = false)
@@ -82,6 +85,8 @@ public class ReviewModel implements Serializable {
 	public void setUnit(UnitModel unit) {
 		this.unit = unit;
 	}
-	
-	
+
+	public Date getTanggal() { return tanggal; }
+
+	public void setTanggal(Date tanggal) { this.tanggal = tanggal; }
 }
