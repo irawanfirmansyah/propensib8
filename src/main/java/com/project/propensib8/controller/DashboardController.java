@@ -18,7 +18,7 @@ import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/dashboard")
 public class DashboardController {
 
     @Autowired
@@ -30,7 +30,7 @@ public class DashboardController {
     @Autowired
     KomplainService komplainService;
 
-    @GetMapping(value = "/dashboard")
+    @GetMapping(value = "/")
     public ResponseEntity<?> getDashboardTopManager(@RequestParam ("tipeSurvei") String tipeSurvei,
                                                    @RequestParam ("bulanTahunStart") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date tanggalMulai,
                                                    @RequestParam ("bulanTahunEnd") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date tanggalSelesai){
@@ -47,6 +47,7 @@ public class DashboardController {
         dashboardExecutive.setPersentaseKepuasanLalu(surveiService.countKepuasanLalu(tanggalMulai,tanggalSelesai,tipeSurvei));
         dashboardExecutive.setKomplain(komplainService.isiKomplain(tanggalMulai,tanggalSelesai,tipeSurvei));
         dashboardExecutive.setReview(reviewService.isiReview(tanggalMulai,tanggalSelesai,tipeSurvei));
+        System.out.println(dashboardExecutive.getJmlhKomplain());
         return new ResponseEntity<>(dashboardExecutive, HttpStatus.OK);
     }
 }

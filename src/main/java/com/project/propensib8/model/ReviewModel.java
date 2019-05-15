@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.sql.Date;
 import java.util.List;
 
+import java.sql.Date;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -38,6 +40,9 @@ public class ReviewModel implements Serializable {
 	@Size(max = 255)
 	@Column(name = "deskripsi", nullable = false)
 	private String deskripsi;
+
+	@Column(name = "tanggal", nullable = false)
+	private Date tanggal;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "id_survei", referencedColumnName = "id", nullable = false)
@@ -82,4 +87,19 @@ public class ReviewModel implements Serializable {
 	public void setUnit(UnitModel unit) {
 		this.unit = unit;
 	}
+
+	/**
+	 * @return the tanggal
+	 */
+	public Date getTanggal() {
+		return tanggal;
+	}
+
+	/**
+	 * @param tanggal the tanggal to set
+	 */
+	public void setTanggal(Date tanggal) {
+		this.tanggal = tanggal;
+	}
+	
 }

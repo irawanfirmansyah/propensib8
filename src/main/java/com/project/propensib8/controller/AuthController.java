@@ -89,7 +89,6 @@ public class AuthController {
             return new ResponseEntity(new ApiResponse(false, "Email tersebut sudah terdaftar!"),
                     HttpStatus.BAD_REQUEST);
         }
-        
         if(!this.validatePassword(signUpRequest.getPassword())) {
         	return new ResponseEntity(new ApiResponse(false, "Password minimal 8 karakter dan setidaknya terdiri dari 1 angka."),
         			HttpStatus.BAD_REQUEST);

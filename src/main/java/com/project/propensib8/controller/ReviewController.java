@@ -3,6 +3,8 @@ package com.project.propensib8.controller;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Map;
 
 import javax.validation.Valid;
@@ -40,6 +42,11 @@ public class ReviewController {
 		ReviewModel result = new ReviewModel();
 		SurveiModel surveiModel = surveiService.getSurveiById(res.get("idSurvei"));
 		UnitModel unitModel = unitService.getUnitByName(res.get("namaUnit"));
+		SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
+		Date parsed = format.parse(res.get("tanggal"));
+		java.sql.Date dateSql = new java.sql.Date(parsed.getTime());
+		
+		result.setTanggal(dateSql);
 		
 		result.setDeskripsi(res.get("deskripsi"));
 		result.setUnit(unitModel);
