@@ -2,6 +2,7 @@ package com.project.propensib8.controller;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.sql.Date;
 import java.text.ParseException;
 import java.util.Map;
 
@@ -13,6 +14,7 @@ import com.project.propensib8.rest.DetailPerforma;
 import com.project.propensib8.rest.PerformaKaryawan;
 import com.project.propensib8.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -70,25 +72,31 @@ public class UnitParameterController {
 		return ResponseEntity.created(new URI("/survei")).body(response);
 	}
 
-	@GetMapping(value = "/performa/{namaUnit}")
-	public ResponseEntity<?> getAllPerforma(@PathVariable ("namaUnit") String namaUnit) {
+	@GetMapping(value = "/performa/{namaUnit}/{tipeSurvei}/")
+	public ResponseEntity<?> getAllPerforma(@PathVariable ("namaUnit") String namaUnit,
+											@PathVariable ("tipeSurvei") String tipeSurvei,
+											@RequestParam ("bulanTahunStart") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date tanggalMulai,
+											@RequestParam ("bulanTahunEnd") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date tanggalSelesai) {
 		PerformaKaryawan performa = new PerformaKaryawan();
 		performa.setNamaUnit(namaUnit);
-		performa.setKomplain(komplainService.countKomplainByNama(namaUnit));
-		performa.setKomplainSolved(komplainService.countSolvedComplaints(namaUnit));
+		performa.setKomplain(komplainService.countKomplainOverviewUnit(namaUnit, tanggalMulai, tanggalSelesai, tipeSurvei));
+		performa.setKomplainSolved(komplainService.countSolvedComplaints(namaUnit, tanggalMulai, tanggalSelesai, tipeSurvei));
 		performa.setIdUnit(Long.toString(unitService.getUnitByName(namaUnit).getId()));
-		performa.setReview(reviewService.countReviewByNama(namaUnit));
+		performa.setReview(reviewService.countReviewOverviewUnit(namaUnit, tanggalMulai, tanggalSelesai, tipeSurvei));
 		return new  ResponseEntity(performa, HttpStatus.OK);
 	}
 
-	@GetMapping(value = "/detail-performa/{namaUnit}")
-	public ResponseEntity<?> getDetailPerforma(@PathVariable ("namaUnit") String namaUnit){
+	@GetMapping(value = "/detail-performa/{namaUnit}/{tipeSurvei}")
+	public ResponseEntity<?> getDetailPerforma(@PathVariable ("namaUnit") String namaUnit,
+											   @PathVariable ("tipeSurvei") String tipeSurvei,
+											   @RequestParam ("bulanTahunStart") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date tanggalMulai,
+											   @RequestParam ("bulanTahunEnd") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date tanggalSelesai){
 		DetailPerforma detailPerforma = new DetailPerforma();
-		detailPerforma.setReviewRest(reviewService.createReviewRest(namaUnit));
-		detailPerforma.setKomplainRest(komplainService.createKomplainRest(namaUnit));
-		detailPerforma.setKomplain(komplainService.countKomplainByNama(namaUnit));
-		detailPerforma.setKomplainSolved(komplainService.countSolvedComplaints(namaUnit));
-		detailPerforma.setReview(reviewService.countReviewByNama(namaUnit));
+		detailPerforma.setReviewRest(reviewService.createReviewRest(namaUnit, tanggalMulai, tanggalSelesai, tipeSurvei));
+		detailPerforma.setKomplainRest(komplainService.createKomplainRest(namaUnit, tanggalMulai, tanggalSelesai, tipeSurvei));
+		detailPerforma.setKomplain(komplainService.countKomplainOverviewUnit(namaUnit, tanggalMulai, tanggalSelesai, tipeSurvei));
+		detailPerforma.setKomplainSolved(komplainService.countSolvedComplaints(namaUnit, tanggalMulai, tanggalSelesai, tipeSurvei));
+		detailPerforma.setReview(reviewService.countReviewOverviewUnit(namaUnit, tanggalMulai, tanggalSelesai, tipeSurvei));
 		return new ResponseEntity<>(detailPerforma, HttpStatus.OK);
 	}
 

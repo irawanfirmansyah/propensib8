@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.project.propensib8.rest.DashboardExecutive;
 import com.project.propensib8.rest.KomplainRest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -104,17 +105,26 @@ public class KomplainServiceImpl implements KomplainService{
 		return listOfKomplain;
 	}
 
-	@Override
-	public int countKomplainByNama(String nama) {
+	public int countKomplainOverviewUnit(String namaUnit, Date startDate, Date endDate, String tipeSurvei) {
 		int count = 0;
-		List<KomplainModel> komplains = komplainDb.findAll();
-		for(int i=0 ; i<komplains.size() ; i++){
-			if(komplains.get(i).getUnit().getNama().equalsIgnoreCase(nama)){
-				count++;
-				System.out.println("asd");
+		List<KomplainModel> komplains = komplainDb.findAllByTanggalBetween(startDate, endDate);
+		if(!tipeSurvei.equalsIgnoreCase("total")) {
+			for (KomplainModel komplain : komplains) {
+				String nama = komplain.getUnit().getNama();
+				String survei = komplain.getSurvei().getJenisSurvei();
+				if (nama.equalsIgnoreCase(nama) && survei.equalsIgnoreCase("tipeSurvei")) {
+					count++;
+				}
 			}
 		}
-		System.out.println(komplains.size());
+		else{
+			for(KomplainModel komplain : komplains){
+				String nama = komplain.getUnit().getNama();
+				if(nama.equalsIgnoreCase(namaUnit)){
+					count++;
+				}
+			}
+		}
 		return count;
 	}
 
@@ -133,20 +143,29 @@ public class KomplainServiceImpl implements KomplainService{
 	}
 
 	@Override
-	public int countSolvedComplaints(String namaUnit) {
+	public int countSolvedComplaints(String namaUnit, Date startDate, Date endDate, String tipeSurvei) {
 		int count = 0;
-		List<KomplainModel> komplains = komplainDb.findAll();
-		for(int i=0 ; i<komplains.size() ; i++){
-			if(komplains.get(i).getUnit().getNama().equalsIgnoreCase(namaUnit)){
-				KomplainModel k = komplains.get(i);
-				if(k.isSolvedMarketing()) {
+		List<KomplainModel> komplains = komplainDb.findAllByTanggalBetween(startDate, endDate);
+		if(!tipeSurvei.equalsIgnoreCase("total")) {
+			for (KomplainModel komplain : komplains) {
+				String nama = komplain.getUnit().getNama();
+				String survei = komplain.getSurvei().getJenisSurvei();
+				if (nama.equalsIgnoreCase(namaUnit) && survei.equalsIgnoreCase(tipeSurvei) && komplain.isSolvedMarketing()) {
 					count++;
 				}
 			}
 		}
-		System.out.println(count);
+		else{
+			for(KomplainModel komplain : komplains){
+				String nama = komplain.getUnit().getNama();
+				if(nama.equalsIgnoreCase(namaUnit) && komplain.isSolvedMarketing()){
+					count++;
+				}
+			}
+		}
 		return count;
 	}
+
 
 	@Override
 	public List<KomplainModel> getKomplainByNamaUnit(String nama) {
@@ -184,21 +203,44 @@ public class KomplainServiceImpl implements KomplainService{
 	}
 
 	@Override
-	public List<KomplainRest> createKomplainRest(String namaUnit) {
+	public List<KomplainRest> createKomplainRest(String namaUnit, Date startDate, Date endDate, String tipeSurvei) {
 		List<KomplainRest> list = new ArrayList<>();
-		for(KomplainModel komplain: komplainDb.findAll()){
-			if(komplain.isSolvedMarketing() == true && komplain.getUnit().getNama().equalsIgnoreCase(namaUnit)) {
-				KomplainRest komplainRest = new KomplainRest();
-				komplainRest.setNama(komplain.getSurvei().getPasien().getNama());
-				komplainRest.setDeskripsi(komplain.getDeskripsi());
-				komplainRest.setRating(komplain.getSurvei().getRating());
+		List<KomplainModel> listOfKomplain = komplainDb.findAllByTanggalBetween(startDate, endDate);
+		if(!tipeSurvei.equalsIgnoreCase("total")) {
+			for (KomplainModel komplain : listOfKomplain) {
+				String nama = komplain.getUnit().getNama();
+				String survei = komplain.getSurvei().getJenisSurvei();
+				if (komplain.isSolvedMarketing() == true && nama.equalsIgnoreCase(namaUnit) && survei.equalsIgnoreCase(tipeSurvei)) {
+					KomplainRest komplainRest = new KomplainRest();
+					komplainRest.setNama(nama);
+					komplainRest.setDeskripsi(komplain.getDeskripsi());
+					komplainRest.setRating(komplain.getSurvei().getRating());
 
-				java.sql.Date sqlDate = komplain.getSurvei().getTanggal();
-				SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-				String resDate = formatter.format(sqlDate);
-				komplainRest.setTanggalIsi(resDate);
+					java.sql.Date sqlDate = komplain.getSurvei().getTanggal();
+					SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+					String resDate = formatter.format(sqlDate);
+					komplainRest.setTanggalIsi(resDate);
 
-				list.add(komplainRest);
+					list.add(komplainRest);
+				}
+			}
+		}
+		else{
+			for (KomplainModel komplain : listOfKomplain) {
+				String nama = komplain.getUnit().getNama();
+				if (komplain.isSolvedMarketing() == true && nama.equalsIgnoreCase(namaUnit)) {
+					KomplainRest komplainRest = new KomplainRest();
+					komplainRest.setNama(nama);
+					komplainRest.setDeskripsi(komplain.getDeskripsi());
+					komplainRest.setRating(komplain.getSurvei().getRating());
+
+					java.sql.Date sqlDate = komplain.getSurvei().getTanggal();
+					SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+					String resDate = formatter.format(sqlDate);
+					komplainRest.setTanggalIsi(resDate);
+
+					list.add(komplainRest);
+				}
 			}
 		}
 		return list;
@@ -228,6 +270,19 @@ public class KomplainServiceImpl implements KomplainService{
 			return komplainDb.findAll();
 		}
 		return komplainDb.findAllByTanggalBetween(startDate, endDate);
+	}
+
+	@Override
+	public List<KomplainModel> findAllByTipeSurvei(String tipeSurvei) {
+		if(tipeSurvei.equalsIgnoreCase("Rawat Jalan")){
+			return komplainDb.findAllByTipeSurvei("Rawat Jalan");
+		}
+		else if(tipeSurvei.equalsIgnoreCase("Rawat Inap")){
+			return komplainDb.findAllByTipeSurvei("Rawat Inap");
+		}
+		else {
+			return komplainDb.findAll();
+		}
 	}
 
 	public KomplainModel createKomplain(KomplainModel komplainModel) {

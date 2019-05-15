@@ -21,11 +21,24 @@ public class ReviewServiceImpl implements ReviewService {
 	ReviewDB reviewDb;
 
 	@Override
-	public int countReviewByNama(String nama) {
+	public int countReviewOverviewUnit(String namaUnit, Date startDate, Date endDate, String tipeSurvei) {
 		int count = 0;
-		for(int num = 0; num < reviewDb.findAll().size(); num++){
-			if(reviewDb.findAll().get(num).getUnit().getNama().equalsIgnoreCase(nama)){
-				count += 1;
+		List<ReviewModel> list = reviewDb.findAllByTanggalBetween(startDate, endDate);
+		if(!tipeSurvei.equalsIgnoreCase("total")) {
+			for (ReviewModel review : list) {
+				String nama = review.getUnit().getNama();
+				String survei = review.getSurvei().getJenisSurvei();
+				if (nama.equalsIgnoreCase(namaUnit) && survei.equalsIgnoreCase(tipeSurvei)) {
+					count++;
+				}
+			}
+		}
+		else{
+			for (ReviewModel review : list) {
+				String nama = review.getUnit().getNama();
+				if (nama.equalsIgnoreCase(namaUnit)) {
+					count++;
+				}
 			}
 		}
 		return count;
@@ -67,19 +80,40 @@ public class ReviewServiceImpl implements ReviewService {
 	}
 
 	@Override
-	public List<ReviewRest> createReviewRest(String namaUnit) {
+	public List<ReviewRest> createReviewRest(String namaUnit, Date startDate, Date endDate, String tipeSurvei) {
 		List<ReviewRest> list = new ArrayList<>();
-		for(ReviewModel review: reviewDb.findAll()){
-			if(review.getUnit().getNama().equalsIgnoreCase(namaUnit)) {
-				ReviewRest reviewRest = new ReviewRest();
-				reviewRest.setNama(review.getSurvei().getPasien().getNama());
-				reviewRest.setDeskripsi(review.getDeskripsi());
-				reviewRest.setRating(review.getSurvei().getRating());
-				java.sql.Date sqlDate = review.getSurvei().getTanggal();
-				SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-				String resDate = formatter.format(sqlDate);
-				reviewRest.setTanggalIsi(resDate);
-				list.add(reviewRest);
+		List<ReviewModel> listOfReview = reviewDb.findAllByTanggalBetween(startDate,endDate);
+		if(!tipeSurvei.equalsIgnoreCase(tipeSurvei)) {
+			for (ReviewModel review : listOfReview) {
+				String nama = review.getUnit().getNama();
+				String survei = review.getSurvei().getJenisSurvei();
+				if (nama.equalsIgnoreCase(namaUnit) && survei.equalsIgnoreCase(tipeSurvei)) {
+					ReviewRest reviewRest = new ReviewRest();
+					reviewRest.setNama(review.getSurvei().getPasien().getNama());
+					reviewRest.setDeskripsi(review.getDeskripsi());
+					reviewRest.setRating(review.getSurvei().getRating());
+					java.sql.Date sqlDate = review.getSurvei().getTanggal();
+					SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+					String resDate = formatter.format(sqlDate);
+					reviewRest.setTanggalIsi(resDate);
+					list.add(reviewRest);
+				}
+			}
+		}
+		else {
+			for (ReviewModel review : listOfReview) {
+				String nama = review.getUnit().getNama();
+				if (nama.equalsIgnoreCase(namaUnit)) {
+					ReviewRest reviewRest = new ReviewRest();
+					reviewRest.setNama(review.getSurvei().getPasien().getNama());
+					reviewRest.setDeskripsi(review.getDeskripsi());
+					reviewRest.setRating(review.getSurvei().getRating());
+					java.sql.Date sqlDate = review.getSurvei().getTanggal();
+					SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+					String resDate = formatter.format(sqlDate);
+					reviewRest.setTanggalIsi(resDate);
+					list.add(reviewRest);
+				}
 			}
 		}
 		return list;

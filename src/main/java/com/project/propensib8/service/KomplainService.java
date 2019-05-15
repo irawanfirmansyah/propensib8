@@ -16,13 +16,14 @@ public interface KomplainService {
     List<KomplainModel> findAll();
     List<KomplainModel> findAllSolvedKomplain();
     List<KomplainModel> getKomplainByNama(String nama);
-    int countSolvedComplaints(String namaUnit);
-    int countKomplainByNama(String nama);
+    int countSolvedComplaints(String namaUnit, Date startDate, Date endDate, String tipeSurvei);
+    int countKomplainOverviewUnit(String nama, Date startDate, Date endDate, String tipeSurvei);
     int countRatingByNama(String nama);
     List<KomplainModel> getKomplainByNamaUnit(String nama);
     List<String> getNamaPasienKomplainByNama(String nama);
     List<String> getDeskripsiKomplainByNama(String nama);
-    List<KomplainRest> createKomplainRest(String namaUnit);
+    List<KomplainRest> createKomplainRest(String namaUnit, Date startDate, Date endDate, String tipeSurvei);
     List<String> isiKomplain(Date startDate, Date endDate, String tipeSurvei);
     List<KomplainModel> findAllByTanggal(Date startDate, Date endDate);
+    List<KomplainModel> findAllByTipeSurvei(String tipeSurvei);
 }

@@ -13,4 +13,5 @@ import com.project.propensib8.model.KomplainModel;
 public interface KomplainDB extends JpaRepository<KomplainModel, Long>{
 	KomplainModel findById(long id);
 	List<KomplainModel> findAllByTanggalBetween(Date startDate, Date endDate);
+	List<KomplainModel> findAllByTipeSurvei(String tipeSurvei);
 }
