@@ -25,5 +25,4 @@ public interface KomplainService {
     List<KomplainRest> createKomplainRest(String namaUnit, Date startDate, Date endDate, String tipeSurvei);
     List<String> isiKomplain(Date startDate, Date endDate, String tipeSurvei);
     List<KomplainModel> findAllByTanggal(Date startDate, Date endDate);
-    List<KomplainModel> findAllByTipeSurvei(String tipeSurvei);
 }

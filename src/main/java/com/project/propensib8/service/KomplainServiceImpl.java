@@ -272,19 +272,6 @@ public class KomplainServiceImpl implements KomplainService{
 		return komplainDb.findAllByTanggalBetween(startDate, endDate);
 	}
 
-	@Override
-	public List<KomplainModel> findAllByTipeSurvei(String tipeSurvei) {
-		if(tipeSurvei.equalsIgnoreCase("Rawat Jalan")){
-			return komplainDb.findAllByTipeSurvei("Rawat Jalan");
-		}
-		else if(tipeSurvei.equalsIgnoreCase("Rawat Inap")){
-			return komplainDb.findAllByTipeSurvei("Rawat Inap");
-		}
-		else {
-			return komplainDb.findAll();
-		}
-	}
-
 	public KomplainModel createKomplain(KomplainModel komplainModel) {
 		return komplainDb.save(komplainModel);
 	}

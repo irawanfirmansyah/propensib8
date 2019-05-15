@@ -48,8 +48,8 @@ public class PasienController {
 	}
 
 	@GetMapping(value = "/komplain")
-	public ResponseEntity<?> getKomplainPasien(@RequestParam ("tipeSurvei") String tipeSurvei){
-		List<KomplainModel> allKomplain = komplainService.findAllByTipeSurvei(tipeSurvei);
+	public ResponseEntity<?> getKomplainPasien(){
+		List<KomplainModel> allKomplain = komplainService.findAll();
 		List<KomplainPasienDetail> res = new ArrayList<>();
 
 		for(KomplainModel k : allKomplain) {
