@@ -48,8 +48,8 @@ public class PasienController {
 	}
 
 	@GetMapping(value = "/komplain")
-	public ResponseEntity<?> getKomplainPasien(){
-		List<KomplainModel> allKomplain = komplainService.findAll();
+	public ResponseEntity<?> getKomplainPasien(@RequestParam ("tipeSurvei") String tipeSurvei){
+		List<KomplainModel> allKomplain = komplainService.findAllByTipeSurvei(tipeSurvei);
 		List<KomplainPasienDetail> res = new ArrayList<>();
 
 		for(KomplainModel k : allKomplain) {
@@ -125,11 +125,6 @@ public class PasienController {
 		detail.setTanggalPengisian(tanggalPengisian);
 		return new ResponseEntity(detail, HttpStatus.OK);
 	}
-
-//	@PostMapping( value = "/komplain/{namaPasien}/{tanggalPengisian}/solved")
-//	public ResponseEntity<?> postBulanTanggal(@Valid @RequestBody Map<String, String> input, @ModelAttribute KomplainModel komplain) throws URISyntaxException, ParseException{
-//
-//	}
 
 	@GetMapping( value = "/komplain/{tahun}/{bulan}")
 	public ResponseEntity<?> getSolvedKomplainByTahunBulan(@PathVariable ("tahun") String tahun, @PathVariable ("bulan") String bulan){
