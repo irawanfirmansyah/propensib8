@@ -72,12 +72,14 @@ public class UnitParameterController {
 		return ResponseEntity.created(new URI("/survei")).body(response);
 	}
 
-	@GetMapping(value = "/performa/{namaUnit}/{tipeSurvei}/")
+	@GetMapping(value = "/performa/{namaUnit}/{tipeSurvei}")
 	public ResponseEntity<?> getAllPerforma(@PathVariable ("namaUnit") String namaUnit,
 											@PathVariable ("tipeSurvei") String tipeSurvei,
-											@RequestParam ("bulanTahunStart") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date tanggalMulai,
-											@RequestParam ("bulanTahunEnd") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date tanggalSelesai) {
+											@RequestParam ("bulanTahunStart") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) String tanggalMulais,
+											@RequestParam ("bulanTahunEnd") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) String tanggalSelesais) {
 		PerformaKaryawan performa = new PerformaKaryawan();
+		Date tanggalMulai = Date.valueOf(tanggalMulais);
+		Date tanggalSelesai = Date.valueOf(tanggalSelesais);
 		performa.setNamaUnit(namaUnit);
 		performa.setKomplain(komplainService.countKomplainOverviewUnit(namaUnit, tanggalMulai, tanggalSelesai, tipeSurvei));
 		performa.setKomplainSolved(komplainService.countSolvedComplaints(namaUnit, tanggalMulai, tanggalSelesai, tipeSurvei));
@@ -89,9 +91,11 @@ public class UnitParameterController {
 	@GetMapping(value = "/detail-performa/{namaUnit}/{tipeSurvei}")
 	public ResponseEntity<?> getDetailPerforma(@PathVariable ("namaUnit") String namaUnit,
 											   @PathVariable ("tipeSurvei") String tipeSurvei,
-											   @RequestParam ("bulanTahunStart") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date tanggalMulai,
-											   @RequestParam ("bulanTahunEnd") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date tanggalSelesai){
+											   @RequestParam ("bulanTahunStart") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) String tanggalMulais,
+											   @RequestParam ("bulanTahunEnd") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) String tanggalSelesais){
 		DetailPerforma detailPerforma = new DetailPerforma();
+		Date tanggalMulai = Date.valueOf(tanggalMulais);
+		Date tanggalSelesai = Date.valueOf(tanggalSelesais);
 		detailPerforma.setReviewRest(reviewService.createReviewRest(namaUnit, tanggalMulai, tanggalSelesai, tipeSurvei));
 		detailPerforma.setKomplainRest(komplainService.createKomplainRest(namaUnit, tanggalMulai, tanggalSelesai, tipeSurvei));
 		detailPerforma.setKomplain(komplainService.countKomplainOverviewUnit(namaUnit, tanggalMulai, tanggalSelesai, tipeSurvei));

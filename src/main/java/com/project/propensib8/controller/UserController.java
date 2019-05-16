@@ -80,7 +80,7 @@ public class UserController {
 		List<UserResponse> response = new ArrayList<>();
 		for (User u : listUser) {
 			String role = u.getRoles().iterator().next().getName().toString();
-			if (!role.equalsIgnoreCase("ROLE_ADMIN")) {
+			if (!role.equalsIgnoreCase("ROLE_ADMIN") && !role.equalsIgnoreCase("ROLE_TOP_MANAGER") && !role.equalsIgnoreCase("ROLE_EXECUTIVE")) {
 				response.add(new UserResponse(u.getId(), u.getName(),
 						u.getRoles().iterator().next().getName().toString(), u.getEmail()));
 			}

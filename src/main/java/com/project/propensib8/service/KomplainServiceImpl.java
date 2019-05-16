@@ -209,10 +209,11 @@ public class KomplainServiceImpl implements KomplainService{
 		if(!tipeSurvei.equalsIgnoreCase("total")) {
 			for (KomplainModel komplain : listOfKomplain) {
 				String nama = komplain.getUnit().getNama();
+				String namaPasien = komplain.getSurvei().getPasien().getNama();
 				String survei = komplain.getSurvei().getJenisSurvei();
 				if (komplain.isSolvedMarketing() == true && nama.equalsIgnoreCase(namaUnit) && survei.equalsIgnoreCase(tipeSurvei)) {
 					KomplainRest komplainRest = new KomplainRest();
-					komplainRest.setNama(nama);
+					komplainRest.setNama(namaPasien);
 					komplainRest.setDeskripsi(komplain.getDeskripsi());
 					komplainRest.setRating(komplain.getSurvei().getRating());
 
@@ -228,9 +229,10 @@ public class KomplainServiceImpl implements KomplainService{
 		else{
 			for (KomplainModel komplain : listOfKomplain) {
 				String nama = komplain.getUnit().getNama();
+				String namaPasien = komplain.getSurvei().getPasien().getNama();
 				if (komplain.isSolvedMarketing() == true && nama.equalsIgnoreCase(namaUnit)) {
 					KomplainRest komplainRest = new KomplainRest();
-					komplainRest.setNama(nama);
+					komplainRest.setNama(namaPasien);
 					komplainRest.setDeskripsi(komplain.getDeskripsi());
 					komplainRest.setRating(komplain.getSurvei().getRating());
 
