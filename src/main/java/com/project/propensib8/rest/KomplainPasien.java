@@ -9,8 +9,11 @@ import com.project.propensib8.model.KomplainModel;;
 public class KomplainPasien {
     private PasienModel pasien;
     private int rating;
-    private List<KomplainModel> listKomplain;
+    private String idSurvei;
+    private String namaUnit;
+    private List<KomplainResponse> listKomplain;
 
+    
     /**
      * @return the pasien
      */
@@ -28,14 +31,14 @@ public class KomplainPasien {
     /**
      * @return the listKomplain
      */
-    public List<KomplainModel> getListKomplain() {
+    public List<KomplainResponse> getListKomplain() {
         return listKomplain;
     }
 
     /**
      * @param listKomplain the listKomplain to set
      */
-    public void setListKomplain(List<KomplainModel> listKomplain) {
+    public void setListKomplain(List<KomplainResponse> listKomplain) {
         this.listKomplain = listKomplain;
     }
 
@@ -51,5 +54,21 @@ public class KomplainPasien {
      */
     public void setRating(int rating) {
         this.rating = rating;
+    }
+
+    public String getIdSurvei() {
+        return idSurvei;
+    }
+
+    public void setIdSurvei(String idSurvei) {
+        this.idSurvei = idSurvei;
+    }
+
+    public String getNamaUnit() {
+        return namaUnit;
+    }
+
+    public void setNamaUnit(String namaUnit) {
+        this.namaUnit = namaUnit;
     }
 }

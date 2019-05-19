@@ -5,6 +5,7 @@ import java.net.URISyntaxException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 import javax.validation.Valid;
@@ -13,11 +14,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.project.propensib8.model.SurveiModel;
+import com.project.propensib8.payload.ApiResponse;
+import com.project.propensib8.model.KomplainModel;
 import com.project.propensib8.repository.ReviewDB;
 import com.project.propensib8.repository.SurveiDB;
 import com.project.propensib8.rest.BaseResponse;
@@ -69,5 +73,21 @@ public class SurveiController {
 		
 //		return ResponseEntity.created(new URI("/survei/add/" + result.getId())).body(result);
 		return ResponseEntity.created(new URI("/survei")).body(response);
+	}
+
+	@PutMapping(value = "/resolve")
+	public SurveiModel solveKomplain(@Valid @RequestBody Map<String, String> request) throws URISyntaxException, ParseException {
+		SurveiModel survei = surveiDb.findById(Long.parseLong(request.get("idSurvei")));
+		List<KomplainModel> komplains = survei.getListKomplain();
+		for(KomplainModel k : komplains){
+			k.setResult(request.get("deskripsi"));
+			k.setSolvedMarketing(true);
+		}
+		survei.setListKomplain(komplains);
+		System.out.println(komplains.size());
+		System.out.println(survei.getPasien().getNama());
+		System.out.println(request.get("idSurvei"));
+		System.out.println(request.get("deskripsi"));
+		return surveiDb.save(survei);
 	}
 }

@@ -18,4 +18,5 @@ public interface SurveiService {
 	boolean cekKomplain(Date startDate, Date endDate, String tipeSurvei);
 	int countKomplainLalu(Date startDate, Date endDate, String tipeSurvei);
 	int countKepuasanLalu(Date startDate, Date endDate, String tipeSurvei);
+	int countAllSurvei(Date startDate, Date endDate, String tipeSurvei);
 }

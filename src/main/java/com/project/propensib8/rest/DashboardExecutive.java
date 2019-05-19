@@ -87,5 +87,3 @@ public class DashboardExecutive {
         this.komplainHigher = komplainHigher;
     }
 }
-
-

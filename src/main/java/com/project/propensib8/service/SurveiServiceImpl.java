@@ -14,7 +14,7 @@ import com.project.propensib8.repository.SurveiDB;
 
 @Service
 @Transactional
-public class SurveiServiceImpl implements SurveiService{
+public class SurveiServiceImpl implements SurveiService {
 	@Autowired
 	SurveiDB surveiDb;
 
@@ -22,8 +22,8 @@ public class SurveiServiceImpl implements SurveiService{
 	public List<SurveiModel> getAllKomplain() {
 		List<SurveiModel> res = new ArrayList<>();
 		List<SurveiModel> listSurvei = surveiDb.findAll();
-		for(SurveiModel s : listSurvei){
-			if(s.getRating() <= 3){
+		for (SurveiModel s : listSurvei) {
+			if (s.getRating() <= 3) {
 				res.add(s);
 			}
 		}
@@ -38,10 +38,10 @@ public class SurveiServiceImpl implements SurveiService{
 
 	@Override
 	public List<SurveiModel> findByTanggal(Date startDate, Date endDate) {
-		if(endDate == null || startDate == null){
+		if (endDate == null || startDate == null) {
 			return this.surveiDb.findAll();
 		}
-		return this.surveiDb.findAllByTanggalBetween(startDate,endDate);
+		return this.surveiDb.findAllByTanggalBetween(startDate, endDate);
 	}
 
 	@Override
@@ -49,7 +49,7 @@ public class SurveiServiceImpl implements SurveiService{
 		List<SurveiModel> list = this.findByTanggal(startDate, endDate);
 		List<SurveiModel> review = new ArrayList<>();
 		int persentase;
-		if(tipeSurvei != "Total") {
+		if (tipeSurvei != "Total") {
 			for (SurveiModel survei : list) {
 				if (survei.getJenisSurvei().equalsIgnoreCase(tipeSurvei) && survei.getRating() >= 4) {
 					review.add(survei);
@@ -58,10 +58,9 @@ public class SurveiServiceImpl implements SurveiService{
 			int numerator = review.size();
 			int denominator = this.findByJenisSurvei(tipeSurvei).size();
 			persentase = numerator / denominator;
-		}
-		else {
-			for(SurveiModel survei : list){
-				if(survei.getRating() >= 4){
+		} else {
+			for (SurveiModel survei : list) {
+				if (survei.getRating() >= 4) {
 					review.add(survei);
 				}
 			}
@@ -74,18 +73,17 @@ public class SurveiServiceImpl implements SurveiService{
 
 	@Override
 	public int countKomplain(Date startDate, Date endDate, String tipeSurvei) {
-		List<SurveiModel> listOfKomplain = this.findByTanggal(startDate,endDate);
+		List<SurveiModel> listOfKomplain = this.findByTanggal(startDate, endDate);
 		List<SurveiModel> komplain = new ArrayList<>();
-		if(tipeSurvei != "Total") {
-			for(SurveiModel survei : listOfKomplain) {
+		if (tipeSurvei != "Total") {
+			for (SurveiModel survei : listOfKomplain) {
 				if (survei.getRating() < 4 && survei.getJenisSurvei().equalsIgnoreCase(tipeSurvei)) {
 					komplain.add(survei);
 				}
 			}
-		}
-		else {
-			for(SurveiModel survei : listOfKomplain) {
-				if(survei.getRating() < 4){
+		} else {
+			for (SurveiModel survei : listOfKomplain) {
+				if (survei.getRating() < 4) {
 					komplain.add(survei);
 				}
 			}
@@ -95,13 +93,11 @@ public class SurveiServiceImpl implements SurveiService{
 
 	@Override
 	public List<SurveiModel> findByJenisSurvei(String jenisSurvei) {
-		if(jenisSurvei == "Rawat Jalan"){
+		if (jenisSurvei == "Rawat Jalan") {
 			return surveiDb.findAllByJenisSurvei("Rawat Jalan");
-		}
-		else if(jenisSurvei == "Rawat Inap"){
+		} else if (jenisSurvei == "Rawat Inap") {
 			return surveiDb.findAllByJenisSurvei("Rawat Inap");
-		}
-		else{
+		} else {
 			return surveiDb.findAll();
 		}
 	}
@@ -128,11 +124,11 @@ public class SurveiServiceImpl implements SurveiService{
 				pembagi += 1;
 			}
 		}
-		return rating/pembagi;
+		return rating / pembagi;
 	}
 
 	@Override
-	public boolean cekKepuasan(Date startDate, Date endDate, String tipeSurvei){
+	public boolean cekKepuasan(Date startDate, Date endDate, String tipeSurvei) {
 		int kepuasanBulanIni = this.countPersentaseKepuasan(startDate, endDate, tipeSurvei);
 
 		LocalDate tempStart = startDate.toLocalDate();
@@ -143,12 +139,11 @@ public class SurveiServiceImpl implements SurveiService{
 		java.sql.Date dateFormatBefore = java.sql.Date.valueOf(oneMonthBefore);
 		java.sql.Date dateFormatAfter = java.sql.Date.valueOf(oneMonthAfter);
 
-		int kepuasanBulanLalu = this.countPersentaseKepuasan(dateFormatAfter,dateFormatBefore,tipeSurvei);
+		int kepuasanBulanLalu = this.countPersentaseKepuasan(dateFormatAfter, dateFormatBefore, tipeSurvei);
 
-		if(kepuasanBulanIni > kepuasanBulanLalu){
+		if (kepuasanBulanIni > kepuasanBulanLalu) {
 			return true;
-		}
-		else{
+		} else {
 			return false;
 		}
 	}
@@ -166,10 +161,9 @@ public class SurveiServiceImpl implements SurveiService{
 		java.sql.Date dateFormatAfter = java.sql.Date.valueOf(oneMonthAfter);
 
 		int komplainLalu = this.countKomplain(dateFormatBefore, dateFormatAfter, tipeSurvei);
-		if(komplainNow > komplainLalu){
+		if (komplainNow > komplainLalu) {
 			return true;
-		}
-		else{
+		} else {
 			return false;
 		}
 	}
@@ -198,8 +192,23 @@ public class SurveiServiceImpl implements SurveiService{
 		java.sql.Date dateFormatBefore = java.sql.Date.valueOf(oneMonthBefore);
 		java.sql.Date dateFormatAfter = java.sql.Date.valueOf(oneMonthAfter);
 
-		int kepuasanBulanLalu = this.countPersentaseKepuasan(dateFormatAfter,dateFormatBefore,tipeSurvei);
+		int kepuasanBulanLalu = this.countPersentaseKepuasan(dateFormatAfter, dateFormatBefore, tipeSurvei);
 		return kepuasanBulanLalu;
 	}
 
+	@Override
+	public int countAllSurvei(Date startDate, Date endDate, String tipeSurvei) {
+		List<SurveiModel> list = this.findByTanggal(startDate, endDate);
+		List<SurveiModel> picked = new ArrayList<>();
+		if (!tipeSurvei.equalsIgnoreCase("total")) {
+			for (SurveiModel survei : list) {
+				if (survei.getJenisSurvei().equalsIgnoreCase("tipeSurvei")) {
+					picked.add(survei);
+				}
+			}
+		} else {
+			picked = list;
+		}
+		return picked.size();
+	}
 }

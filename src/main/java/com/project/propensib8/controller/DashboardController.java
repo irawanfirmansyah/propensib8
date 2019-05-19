@@ -32,11 +32,17 @@ public class DashboardController {
 
     @GetMapping(value = "/")
     public ResponseEntity<?> getDashboardTopManager(@RequestParam ("tipeSurvei") String tipeSurvei,
-                                                   @RequestParam ("bulanTahunStart") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date tanggalMulai,
-                                                   @RequestParam ("bulanTahunEnd") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date tanggalSelesai){
+                                                   @RequestParam ("bulanTahunStart") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) String start,
+                                                   @RequestParam ("bulanTahunEnd") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) String end){
+        
+        System.out.println(start);
+        System.out.println(end);
+        Date tanggalMulai = Date.valueOf(start);
+        Date tanggalSelesai = Date.valueOf(end);
+        System.out.println(tanggalMulai);
+        System.out.println(tanggalSelesai);
         DashboardExecutive dashboardExecutive = new DashboardExecutive();
-        List<SurveiModel> listOfSurvei = surveiService.findByTanggal(tanggalMulai,tanggalSelesai);
-        dashboardExecutive.setJmlhSurvei(listOfSurvei.size());
+        dashboardExecutive.setJmlhSurvei(surveiService.countAllSurvei(tanggalMulai, tanggalSelesai, tipeSurvei));
         dashboardExecutive.setPersentaseKepuasan(surveiService.countPersentaseKepuasan(tanggalMulai, tanggalSelesai, tipeSurvei));
         dashboardExecutive.setJmlhKomplain(surveiService.countKomplain(tanggalMulai, tanggalSelesai, tipeSurvei));
         dashboardExecutive.setRating(surveiService.countRating(tanggalMulai, tanggalSelesai, tipeSurvei));
