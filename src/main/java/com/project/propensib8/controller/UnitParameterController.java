@@ -4,6 +4,8 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.sql.Date;
 import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import javax.validation.Valid;
@@ -21,6 +23,7 @@ import org.springframework.web.bind.annotation.*;
 
 import com.project.propensib8.model.ParameterModel;
 import com.project.propensib8.model.UnitModel;
+import com.project.propensib8.model.KomplainModel;
 import com.project.propensib8.model.UnitParameterModel;
 import com.project.propensib8.repository.UnitParameterDB;
 import com.project.propensib8.rest.BaseResponse;
@@ -88,6 +91,15 @@ public class UnitParameterController {
 				komplainService.countSolvedComplaints(namaUnit, tanggalMulai, tanggalSelesai, tipeSurvei));
 		performa.setIdUnit(Long.toString(unitService.getUnitByName(namaUnit).getId()));
 		performa.setReview(reviewService.countReviewOverviewUnit(namaUnit, tanggalMulai, tanggalSelesai, tipeSurvei));
+
+		int count = 0;
+		List<KomplainModel> listAllKomplain = komplainDb.findAll();
+		for(KomplainModel k : listAllKomplain){
+			if(k.isSolvedHR() && k.isSolvedMarketing()){
+				count++;
+			}
+		}
+		performa.setKomplainSolvedByHRMarketing(count);
 		return new ResponseEntity(performa, HttpStatus.OK);
 	}
 
@@ -105,10 +117,34 @@ public class UnitParameterController {
 				komplainService.createKomplainRest(namaUnit, tanggalMulai, tanggalSelesai, tipeSurvei));
 		detailPerforma.setKomplain(
 				komplainService.countKomplainOverviewUnit(namaUnit, tanggalMulai, tanggalSelesai, tipeSurvei));
-		detailPerforma.setKomplainSolved(
-				komplainService.countSolvedComplaints(namaUnit, tanggalMulai, tanggalSelesai, tipeSurvei));
 		detailPerforma
 				.setReview(reviewService.countReviewOverviewUnit(namaUnit, tanggalMulai, tanggalSelesai, tipeSurvei));
+
+		int count = 0;
+		int count1 = 0;
+		List<KomplainModel> listAllKomplain = komplainDb.findAll();
+		for(KomplainModel k : listAllKomplain){
+			if(k.isSolvedHR() && k.isSolvedMarketing() && k.getUnit().getNama().equalsIgnoreCase(namaUnit)){
+				count++;
+			}
+			if(k.isSolvedMarketing() && !k.isSolvedHR() && k.getUnit().getNama().equalsIgnoreCase(namaUnit)){
+				count1++;
+			}
+		}
+		detailPerforma.setKomplainSolved(count1);
+		detailPerforma.setKomplainSolvedByHRMarketing(count);
 		return new ResponseEntity<>(detailPerforma, HttpStatus.OK);
+	}
+
+	@GetMapping(value = "/riwayat-performa")
+	public List<KomplainModel> getRiwayatPerformaKaryawan(){
+		List<KomplainModel> listAllKomplain = komplainDb.findAll();
+		List<KomplainModel> result = new ArrayList<>();
+		for(KomplainModel k : listAllKomplain){
+			if(k.isSolvedHR() && k.isSolvedMarketing()){
+				result.add(k);
+			}
+		}
+		return result;
 	}
 }

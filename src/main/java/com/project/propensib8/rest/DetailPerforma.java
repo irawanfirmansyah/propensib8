@@ -9,11 +9,11 @@ public class DetailPerforma {
     int review;
     int komplain;
     int komplainSolved;
+    int komplainSolvedByHRMarketing;
     List<ReviewRest> reviewRest;
     List<KomplainRest> komplainRest;
-    
-    
 
+    
     public int getKomplainSolved() {
 		return komplainSolved;
 	}
@@ -45,6 +45,14 @@ public class DetailPerforma {
     public List<KomplainRest> getKomplainRest() { return komplainRest; }
 
     public void setKomplainRest(List<KomplainRest> komplainRest) { this.komplainRest = komplainRest; }
+
+    public int getKomplainSolvedByHRMarketing() {
+        return komplainSolvedByHRMarketing;
+    }
+
+    public void setKomplainSolvedByHRMarketing(int komplainSolvedByHRMarketing) {
+        this.komplainSolvedByHRMarketing = komplainSolvedByHRMarketing;
+    }
 
 
 }

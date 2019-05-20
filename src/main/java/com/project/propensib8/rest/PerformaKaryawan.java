@@ -10,6 +10,8 @@ public class PerformaKaryawan {
     int review;
     int komplain;
     int komplainSolved;
+    int komplainSolvedByHRMarketing;
+
     
     public int getKomplainSolved() {
 		return komplainSolved;
@@ -49,6 +51,14 @@ public class PerformaKaryawan {
 
     public void setKomplain(int komplain) {
         this.komplain = komplain;
+    }
+
+    public int getKomplainSolvedByHRMarketing() {
+        return komplainSolvedByHRMarketing;
+    }
+
+    public void setKomplainSolvedByHRMarketing(int komplainSolvedByHRMarketing) {
+        this.komplainSolvedByHRMarketing = komplainSolvedByHRMarketing;
     }
 
 }
