@@ -98,23 +98,21 @@ public class KomplainController {
 		List<KomplainPasien> res = new ArrayList<>();
 		List<SurveiModel> surveiKomplains = surveiService.getAllKomplain();
 		System.out.println(surveiKomplains.size());
-		for (SurveiModel s : surveiKomplains) {
-			// kalo komplain ini blm di selesaikan marketing,
-			// survei tsb masuk ke dalam list komplain pasien
-			if (!s.getListKomplain().get(0).isSolvedMarketing()) {
+		for(SurveiModel s : surveiKomplains){
+			if(!s.getListKomplain().get(0).isSolvedMarketing()){
 				KomplainPasien komplainPasien = new KomplainPasien();
 				komplainPasien.setIdSurvei(Long.toString(s.getId()));
 				komplainPasien.setPasien(s.getPasien());
-				List<KomplainResponse> listKomplainRes = new ArrayList<>();
+				List<KomplainResponse> lKomplainResponses = new ArrayList<>();
 				for(KomplainModel k : s.getListKomplain()){
 					KomplainResponse komplainResponse = new KomplainResponse();
 					komplainResponse.setDeskripsi(k.getDeskripsi());
 					komplainResponse.setId(Long.toString(k.getId()));
 					komplainResponse.setNamaUnit(k.getUnit().getNama());
 					komplainResponse.setTanggal(k.getTanggal().toString());
-					listKomplainRes.add(komplainResponse);
+					lKomplainResponses.add(komplainResponse);
 				}
-				komplainPasien.setListKomplain(listKomplainRes);
+				komplainPasien.setListKomplain(lKomplainResponses);
 				komplainPasien.setRating(s.getRating());
 				res.add(komplainPasien);
 			}

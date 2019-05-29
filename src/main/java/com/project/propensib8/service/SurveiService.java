@@ -13,6 +13,7 @@ public interface SurveiService {
 	int countPersentaseKepuasan(Date startDate, Date endDate, String tipeSurvei);
 	int countKomplain(Date startDate, Date endDate, String tipeSurvei);
 	List<SurveiModel> findByJenisSurvei(String jenisSurvei);
+	List<SurveiModel> getAllUnresolvedKomplain();
 	int countRating(Date startDate, Date endDate, String tipeSurvei);
 	boolean cekKepuasan(Date startDate, Date endDate, String tipeSurvei);
 	boolean cekKomplain(Date startDate, Date endDate, String tipeSurvei);

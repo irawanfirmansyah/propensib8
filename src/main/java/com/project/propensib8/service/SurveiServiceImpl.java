@@ -23,7 +23,7 @@ public class SurveiServiceImpl implements SurveiService {
 		List<SurveiModel> res = new ArrayList<>();
 		List<SurveiModel> listSurvei = surveiDb.findAll();
 		for (SurveiModel s : listSurvei) {
-			if (s.getRating() <= 3) {
+			if (s.getRating() <= 3 && s.getRating() > 0){
 				res.add(s);
 			}
 		}
@@ -210,5 +210,17 @@ public class SurveiServiceImpl implements SurveiService {
 			picked = list;
 		}
 		return picked.size();
+	}
+
+	@Override
+	public List<SurveiModel> getAllUnresolvedKomplain() {
+		List<SurveiModel> res = new ArrayList<>();
+		List<SurveiModel> allSurvei = surveiDb.findAll();
+		for(SurveiModel s : allSurvei){
+			if(s.getRating() <= 3){
+				res.add(s);
+			}
+		}
+		return res;
 	}
 }

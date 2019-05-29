@@ -10,7 +10,6 @@ public class KomplainPasien {
     private PasienModel pasien;
     private int rating;
     private String idSurvei;
-    private String namaUnit;
     private List<KomplainResponse> listKomplain;
 
     
@@ -62,13 +61,5 @@ public class KomplainPasien {
 
     public void setIdSurvei(String idSurvei) {
         this.idSurvei = idSurvei;
-    }
-
-    public String getNamaUnit() {
-        return namaUnit;
-    }
-
-    public void setNamaUnit(String namaUnit) {
-        this.namaUnit = namaUnit;
     }
 }
